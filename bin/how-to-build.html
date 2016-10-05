@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>How To Build</title>
+  <!-- Styles -->  
+  <style type="text/css">
+
+    body { 
+
+        color: black;
+
+        font-family: verdana, arial, helvetica, sans-serif;
+
+    }
+
+    
+
+    p {
+
+        font-family: verdana, arial, helvetica, sans-serif;
+
+        text-align: justify;
+
+    }
+
+    
+
+    a:link, a:active, a:visited {
+
+        color: red;
+
+    }
+
+    
+
+    tr.alt {
+
+        background-color:#eeeeee;
+
+    }
+
+    
+
+    td {
+
+        font-family: verdana, arial, helvetica, sans-serif;
+
+    }
+
+    
+
+    ol {
+
+        font-family: verdana, arial, helvetica, sans-serif;
+
+    }
+
+    
+
+    ul {
+
+        list-style-type: square;
+
+        text-align: justify;
+
+    }
+
+    
+
+    h1 {
+
+        font-family: verdana, arial, helvetica, sans-serif;
+
+    }
+
+    
+
+    table { 
+
+        border-color: black;
+
+        border-style: solid;
+
+    }
+
+    
+
+    .table-header {
+
+        background-color:red;
+
+        color: black;
+
+        font-weight: bold;
+
+    }
+
+    
+
+  </style>
+</head>
+<body>
+&lt;<a href="mailto:pmonday@apress.com">pmonday@apress.com</a>&gt;
+<h1>Contents</h1>
+<ul>
+  <li><a href="#intro">Using the Pattern Code</a></li>
+  <li><a href="#Installing_the_Environment">Installing the Environment</a></li>
+  <li><a href="#Installing_Dependent_Runtime">Installing Dependent Runtime
+Environments, Apache Tomcat, Apache Axis and MySQL</a></li>
+  
+  <ul>
+    <li><a href="#Installing_Apache_Tomcat_and_Apache_Axis">Installing Apache
+Tomcat and Apache Axis</a></li>
+    <li><a href="#Installing_MySQL">Installing MySQL</a></li>
+  
+  </ul>
+  <li><a href="#Building_the_Examples">Building the Examples</a></li>
+  <li><a href="#Deploying_the_Examples">Deploying the Examples</a></li>
+  <li><a href="#Populating_the_Data_and_Running_Samples">Populating the Data
+and Running Samples</a></li>
+  <li><a href="#Finding_Updates_Errata_and_">Finding Updates, Errata, and
+Documentation in the Downloaded Source Code</a></li>
+  <li><a href="#Using_the_SourceForge_Open-Source_Web">Using the SourceForge
+Open-Source Web Site</a></li>
+</ul>
+<h1><a name="intro"></a>Using the Pattern Code</h1>
+<p>THE BOOK'S SAMPLE CODE is available from two locations. First, the <a
+ href="http://www.apress.com/book/download.html">Downloads section of the
+Apress Web site</a> contains the source code as presented in the book, with
+some minor enhancements for copyright information, comments, and any necessary
+updates and corrections. Second, <a
+ href="http://sourceforge.net/projects/websvcdsnptn">SourceForge contains
+an active open-source project</a> for adding Web Service patterns and enterprise
+application patterns to the P.T. Monday Coffee Company application. The SourceForge
+code attempts to maintain currency with software packages and new ideas in
+the Web Service community. As such, you may find that SourceForge's version
+of the code is substantially different from the book's code. However, an original
+version of the code and documentation for the evolution of the code are available.</p>
+<p>When using Web Services, a variety of software packages are necessary to
+support both the Web Service architecture and the architecture adapters in
+whatever language you are using. This appendix walks you through installing,
+building, and running the pattern examples.</p>
+<h1><a name="Installing_the_Environment"></a>Installing the Environment</h1>
+<p>First, you need to download and install the required software as identified
+in Table A-1. For each download, record the location where you installed it
+(you will use this information later). Table A-1 gives sample installation
+directories for each product so that you can see any additional changes that
+are required in the build and run scripts.<br>
+</p>
+<table cellpadding="2" cellspacing="2" border="1" width="100%"
+ title="Table A-1">
+  <tbody>
+    
+  </tbody><thead style="">      <td valign="top">Software       </td>
+      <td valign="top">Version       </td>
+      <td valign="top">Download URL       </td>
+      <td valign="top">Installation Directory       </td>
+      <td valign="top">Description       </td>
+    </thead>    <tbody>
+    <tr>
+      <td valign="top">Pattern Code       </td>
+      <td valign="top">1.0       </td>
+      <td valign="top"><a href="http://www.apress.com/download.html">http://www.apress.com/download.html</a>
+or <a href="http://sourceforge.net/projects/websvcdsnptn/">http://sourceforge.net/projects/websvcdsnptn/</a>
+      </td>
+      <td valign="top">/java/WebServicesBook<br>
+      </td>
+      <td valign="top">This is the open source code discussed throughout the
+book along with any constructed files, such as the Web Services Description
+Language (WSDL) files, Web Service Deployment Descriptor (WSDD) files, and
+property files.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Java 2 Standard Edition<br>
+      </td>
+      <td valign="top">1.4.1<br>
+      </td>
+      <td valign="top"><a
+ href="http://java.sun.com/j2se/1.4.1/download.html">http://java.sun.com/j2se/1.4.1/download.html</a><br>
+      </td>
+      <td valign="top">/j2sdk1.4.1_01<br>
+      </td>
+      <td valign="top">The Java 2 Standard Edition Software Developer's Kit
+(SDK). Be sure to use at least the version specified here, though you can
+often use a more recent build.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Apache Ant<br>
+      </td>
+      <td valign="top">1.5<br>
+      </td>
+      <td valign="top"><a href="http://jakarta.apacheorg/ant">http://jakarta.apacheorg/ant</a><br>
+      </td>
+      <td valign="top">/java/jakarta-ant-1.5<br>
+      </td>
+      <td valign="top">Ant is the build and execution environment for this
+book. It makes customization of the environment easier than using script
+files.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Apache Axis<br>
+      </td>
+      <td valign="top">1.0<br>
+      </td>
+      <td valign="top"><a href="http://xml.apache.org/axis">http://xml.apache.org/axis</a><br>
+      </td>
+      <td valign="top">/java/xml-axis-1_0<br>
+      </td>
+      <td valign="top">This is the Web Service engine. Apache Axis is an
+open-source project that you can participate in; however, binaries are available
+from the Web Site.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Apache SOAP<br>
+      </td>
+      <td valign="top">2.3.1<br>
+      </td>
+      <td valign="top"><a href="http://xml.apache.org/soap">http://xml.apache.org/soap</a><br>
+      </td>
+      <td valign="top">/java/soap-2_3_1<br>
+      </td>
+      <td valign="top">This package contains parsing code for Simple Object
+Access Protocol (SOAP) messages; a prerequisite for the chapters that manipulate
+SOAP directly.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">UDDI4J<br>
+      </td>
+      <td valign="top">1.0.3<br>
+      </td>
+      <td valign="top"><a href="http://www.uddi4j.org">http://www.uddi4j.org</a><br>
+      </td>
+      <td valign="top">/java/uddi4j<br>
+      </td>
+      <td valign="top">UDDI4J is a Java-based open-source Universal Description,
+Data and Discovery (UDDI) implementation for interacting with UDDI directories.
+&nbsp;Several chapters rely on UDDI interactions for the sample implementation.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Apache Tomcat<br>
+      </td>
+      <td valign="top">4.1<br>
+      </td>
+      <td valign="top"><a href="http://jakarta.apache.org/tomcat">http://jakarta.apache.org/tomcat</a><br>
+      </td>
+      <td valign="top">/Program Files/Apache Group/Tomcat 4.1<br>
+      </td>
+      <td valign="top">This is an open-source Java-based Web environment
+into which Apache Axis plugs. Apache Tomcat versions change rapidly, so be
+careful about recording the directory that Tomcat installs to and downloading
+the proper executable binary file. For Windows, you one labeled something
+like jakarta-tomcat-4.1.exe<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">LIBeLIS LiDO (JDO)<br>
+      </td>
+      <td valign="top">1.3 Build 5<br>
+      </td>
+      <td valign="top"><a href="http://www.libelis.com">http://www.libelis.com</a><br>
+      </td>
+      <td valign="top">/dev/lido<br>
+      </td>
+      <td valign="top">LIDO is a Java Data Objects (JDO) implementation available
+as a community edition from LIBeLIS. This is the only software in the book
+that does not adhere to my open-source mantra. I use it in the book because
+the company offers a free community edition and has friendly and accessible
+customer support. There is an open-source counterpart to JDO, but it is currently
+too complex, especially since JDO is not the primary focus of the book.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">MySQL<br>
+      </td>
+      <td valign="top">3.23.52<br>
+      </td>
+      <td valign="top"><a href="http://www.mysql.org">http://www.mysql.org</a><br>
+      </td>
+      <td valign="top">/mysql<br>
+      </td>
+      <td valign="top">This is an open-source database used for persistence.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">Connector/J (JDBC)<br>
+      </td>
+      <td valign="top">2.0.14<br>
+      </td>
+      <td valign="top"><a href="http://www.mysql.org">http://www.mysql.org</a><br>
+      </td>
+      <td valign="top">/java/mm.mysql-2.0.14<br>
+      </td>
+      <td valign="top">This is the JDBC connection for the MySQL database;
+again, this is open source.<br>
+      </td>
+    </tr>
+      
+  </tbody>
+</table>
+<p>After installing the software, you have to modify a series of property
+files and BAT files used for compiling the examples and running the examples.
+All of the settings reside in the <code>/java/WebServicesBook/bin/build.properties</code>
+file. Check all of the paths identified in the file to ensure that the paths,
+ports, and addresses match your own. Often, updated versions of the code
+will change the path to the code. As long as you update the <code>build.properties</code>
+file appropriately, you should be OK (assuming the product does not break
+version compatibility). The latest information is available from the SourceForge
+Web site.</p>
+<p>Next, check the ant.bat file in the <code>/java/WebServicesBook/bin</code>
+directory for the correct settings of the <code>ANT_HOME</code> and <code>JAVA_HOME</code>
+variables. You may also want to customize this script for your own environment
+depending on the environment variables set in your global or system environment
+variables. Once you have fixed the <code>ant.bat</code> file, you can validate
+that it is working by typing ant from the command line while you are in the
+<code>/java/WebServicesBook/bin</code> directory. You should receive a list
+of build targets that match those discussed in this appendix and in the chapter
+sections that identify Ant targets for the various patterns.</p>
+<h1><a name="Installing_Dependent_Runtime"></a>Installing Dependent Runtime
+Environments, Apache Tomcat, Apache Axis and MySQL</h1>
+<p>In general, the software in Table A-1 consists of simple class packages
+that the build and runtime environment uses. Apache Tomcat and MySQL are
+noticeable exceptions; each requires specialized handling.</p>
+<h2><a name="Installing_Apache_Tomcat_and_Apache_Axis"></a>Installing Apache
+Tomcat and Apache Axis</h2>
+<p>The Apache Tomcat and Apache Axis installation can be a little tricky.
+After installa-tion, you need to go further and install your own JAR files
+that both Apache Tomcat and Apache Axis use while running the samples. You
+need quite a few additional JAR files because of the way you will build the
+samples in the book. Chapter 13, &#8220;Exploring the Physical Tiers Pattern,&#8221;
+explains the environment in more detail.</p>
+<p>Installing Apache Tomcat, installing Apache Axis, and deploying the depen-dent
+JAR files for your environment are relatively complex processes. You should
+break up the steps to ensure that each of the product installations is working
+before moving on to the next one. If you are installing Apache Tomcat and
+Apache Axis, follow these steps:</p>
+<ol>
+  <li>Install Apache Tomcat, which is typically as easy as downloading the
+executable binary file (identified by the .exe extension on Windows) and running
+it on your computer. Read the instructions if you run the executable and
+the next step does not work as planned.</li>
+  <li>Start Apache Tomcat (typically from the Start Tomcat program icon installed
+in the Apache Tomcat 4.1 program group) and verify its proper installation&#8212;typically
+by going to <a href="http://localhost:8080">http://localhost:8080</a> . You
+should see a welcome page with the Apache Tomcat logo when you make contact
+with the Apache Tomcat server. This should take about 1&#8211;2 seconds.</li>
+  <li>Assuming step 2 was successful, shut Apache Tomcat down (again, you
+can use the program icons installed under the Apache Tomcat 4.1 pro-gram group;
+in this case, you would use the Stop Tomcat program icon).</li>
+  <li>Install Apache Axis according to the installation instructions. To
+install Apache Axis, you typically unzip the downloaded file (axis-10.zip
+) to a permanent directory. Then, locate the webapps directory within the
+expanded directory, something such as <code>./xml-axis-10/webapps</code>
+. Copy the contents of the webapps directory to the Apache Tomcat Web applica-tions
+directory&#8212;typically <code>/Program Files/Apache Group/Tomcat 4.1/</code>webapps
+. The Apache Tomcat&#8211;specific directory (in this case, Tomcat 4.1 ) may change
+with the version number of Apache Tomcat.</li>
+  <li>Start Apache Tomcat again using the program icon.</li>
+  <li>Verify the Apache Axis installation by going to the management console
+at <a href="http://localhost:8080/axis">http://localhost:8080/axis</a> .</li>
+  <li>Shut down Apache Tomcat using the program icon.</li>
+  <li>Go to the <code>/java/WebServicesBook/bin</code> directory and install
+the samples and remaining environment (assuming you have downloaded all of
+the dependent software and fixed the build.properties file) by running the
+command ant finishinstall.</li>
+  <li>Start Apache Tomcat again using the program icon.</li>
+</ol>
+<p></p>
+<blockquote><cite>NOTE These steps and Uniform Resource Locators (URLs) are
+relatively stable; however, you may choose to customize them for your own
+installation. If you do customize the installation, make sure you appropriately
+modify the previous instructions.</cite></blockquote>
+<p></p>
+<p></p>
+<h2><a name="Installing_MySQL"></a>Installing MySQL</h2>
+<p>The book&#8217;s chosen JDO implementation, LiDO, uses the MySQL relational
+data-base for persistence underneath the JDO Application Programming Interface
+(API). Installing MySQL is relatively simple, but there is some information
+you will want in order to become handy with MySQL. Assuming you installed
+MySQL to the <code>/mysql</code> directory, you will use several utilities
+from the <code>/mysql/bin</code> directory (see Table A-2). Installing MySQL
+is typically as easy as downloading the EXE file and running through the
+installation process that starts by running the exe-cutable.</p>
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><b>Utility<br>
+      </b>      </td>
+      <td valign="top"><b>Description<br>
+      </b>      </td>
+    </tr>
+    <tr>
+      <td valign="top">winmysqladmin.exe<br>
+      </td>
+      <td valign="top">This is the administration console for MySQL. After
+running this utility, you will find an additional icon in your Windows System
+Tray. Display this console to monitor the database. The Database tab lists
+the databases that reside in your local installation. You will use the <code>wsbook
+      </code>database. Create <code>wsbook </code>by selecting the <code>Create
+Database</code> contextual menu in the <code>Databases </code>section of
+the dialog box. You create tables with an Ant build step, <code>buildtables</code>
+(see the section <a href="#Building_the_Examples">"Building the Examples"</a>
+for more information.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">MySqlManager.exe<br>
+      </td>
+      <td valign="top">This allows you to run simple SQL commands against
+the tables. This is a fun way to view the structure of the persistent data.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">mysqlshutdown.exe<br>
+      </td>
+      <td valign="top">This shuts down a running instance of MySQL.<br>
+      </td>
+    </tr>
+  
+  </tbody>
+</table>
+<p></p>
+<h1><a name="Building_the_Examples"></a>Building the Examples</h1>
+<p>Building the examples takes several steps. Ant helps automate the build
+process, assuming you have set up the properties correctly. This section
+shows how to build all the samples with a single set of commands rather than
+building each sample separately. To build the samples, execute the following
+Ant targets from the <code>/java/WebServicesBook/bin</code> directory:</p>
+<li><code>ant build</code>: This clears out previous builds, creates new
+directories, builds the architecture adapters from the WSDL files in <code>/java/WebServicesBook/</code>
+descriptors , and compiles all of the source code. The result of this step
+is a fully compiled set of classes ready for deployment to Apache Axis.</li>
+<li><code>ant enhance</code>: This JDO-specific step of the build process
+modifies the bytecodes of persistent classes according to the JDO specification.
+You must perform this step each time you complete a build but before you deploy
+the examples to Apache Axis.</li>
+<li><code>ant buildtables</code>: This builds the MySQL tables that JDO uses
+to per-sist data. You should ensure that your MySQL database instance is running;
+see Table A-2 for the appropriate MySQL commands.</li>
+<p></p>
+<p>After the previous steps, you will have all of your client-side code available
+for use, but there are no Web Services deployed via Apache Axis. You can
+modify clients programs and build them without redeploying the Web Services
+themselves.</p>
+<h1><a name="Deploying_the_Examples"></a>Deploying the Examples</h1>
+<p>You install the Web Services used in the book through the Ant targets
+identified in this appendix. In general, beyond the Ant scripts, there is
+no additional inter-action necessary with Apache Axis (either through the
+browser-based console or through additional command-line utilities), which
+makes Ant an ideal environ-ment for installation. To install the Web Services
+identified in the book, verify that your Apache Axis installation is correct
+by following the steps in the <a href="#Installing_Dependent_Runtime">&#8220;Installing
+Dependent Runtime Environments, Apache Tomcat, Apache Axis, and MySQL&#8221;</a>
+section.</p>
+<p>Assuming that Apache Tomcat and Apache Axis are available and running,
+use the following command, run from the <code>/java/WebServicesBook/bin</code>
+directory, to deploy the source you compiled and enhanced in the section
+<a href="#Building_the_Examples">&#8220;Building the Examples&#8221;</a>:<br>
+<code>ant deploy</code><br>
+</p>
+<p>If you modified a Web Service and would like to run the updated service
+after compilation, first &#8220;undeploy&#8221; the existing Web Services using this
+command:<br>
+<code>ant undeploy</code><br>
+</p>
+<p>Once I have undeployed the services, I usually shut down the Apache Tomcat
+and Apache Axis environment. This may be an urban legend, but I prefer to
+remove all of the dependencies from the process space. Once you restart Apache
+Tomcat, use the deploy target to deploy your recompiled code.</p>
+<h1><a name="Populating_the_Data_and_Running_Samples"></a>Populating the
+Data and Running Samples</h1>
+<p>In addition to the installation, build, and deployment steps, you can
+also run client-side code from the Ant environment. All of the targets for
+the pattern sam-ples are available in the appropriate chapter. Before running
+the examples but after deploying new Web Services, you will want to populate
+some test data. You can do this with a simple client program that uses the
+Web Service business object collections. Use the populate target from the
+<code>/java/WebServicesBook/bin</code>directory as follows:<br>
+<code>ant populate</code><br>
+</p>
+<p>From here on out, the data is not often updated. To repopulate the data,
+drop the wsbook database and re-create it using the contextual menus from
+the MySQL administration console, discussed in the section <a
+ href="#Installing_MySQL">&#8220;Installing MySQL.&#8221;</a>Then, run the buildtables
+Ant target as identified in the section <a href="#Building_the_Examples">&#8220;Building
+the Examples.&#8221; </a>Finally, rerun the populate target.</p>
+<h1><a name="Finding_Updates_Errata_and_"></a>Finding Updates, Errata, and
+Documentation in the Downloaded Source Code</h1>
+<p>Several files contained in the downloaded sample files include information
+about updates and additional documentation (see Table A-3). These files are
+up-to-date on the SourceForge open-source Web site.</p>
+<table cellpadding="2" cellspacing="2" border="1" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">File in Downloaded Code Package<br>
+      </td>
+      <td valign="top">Description<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">src/errata.html<br>
+      </td>
+      <td valign="top">Contains errors and corrections from the book.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">src/updates.html<br>
+      </td>
+      <td valign="top">Contains updates to the application that affect the
+book's source code.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">build/how-to-build.html<br>
+      </td>
+      <td valign="top">Contains instructions for building the source code,
+similar to those presented here but formatted slightly differently.<br>
+      </td>
+    </tr>
+  
+  </tbody>
+</table>
+<p></p>
+<h1><a name="Using_the_SourceForge_Open-Source_Web"></a>Using the SourceForge
+Open-Source Web Site</h1>
+<p>Using SourceForge can be complex, or it can be easy. If you want to browse
+the code and files identified in this appendix, you can use a Web-based interface.
+You can also use Concurrent Versions System (CVS) to download the source
+code and maintain up-to-date source on your own machine (<a
+ href="http://www.cvshome.org/">http://www.cvshome.org/</a>). For read-only
+access to the source code, get a CVS client (built into most development environments)
+and follow the instructions at <a
+ href="http://sourceforge.net/cvs/?group_id=71513">http://sourceforge.net/cvs/?group_id=71513</a>
+. These instructions are also accessible from the primary SourceForge project
+at <a href="http://sourceforge.net/projects/websvcdsnptn">http://sourceforge.net/projects/websvcdsnptn</a>
+. To use read/write access, you need a SourceForge user ID and a Secure Shell
+(SSh) to access the code. I use the following tools for my development environment:
+</p>
+<ul>
+  <li>PuTTY: PuTTY is a free, open-source version of Telnet and SSh for the
+Windows platform and is available at <a
+ href="http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html">http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html</a>.
+Installation is relatively easy; simply unzip the programs to a directory.
+Using the instructions from SourceForge, you will use the PuTTY tools to
+generate a key for secure interactions with the project, and you will use
+the SSh facilities to transfer files from a CVS client.</li>
+  <li>WinCvs: WinCvs is a free Windows client to the CVS system that SourceForge
+uses. The SourceForge instructions tell you how to modify WinCvs to use PuTTY
+as the SSh client to a SourceForge project. WinCvs is available at <a
+ href="http://www.wincvs.org/">http://www.wincvs.org/</a>. Installing WinCvs
+is typically as easy as running the downloaded executable binary.</li>
+</ul>
+<p>You can find explicit instructions that tell you how to set up these tools
+and link the entire environment together at SourceForge (<a
+ href="http://sourceforge.net/docman/display_doc.php?docid=766&amp;group_id=1">http://sourceforge.net/docman/display_doc.php?docid=766&amp;group_id=1</a>
+). If this documentation link is not active or you are using different software,
+go to the SourceForge documentation home at <a
+ href="http://sourceforge.net/docman/index.php?group_id=1">http://sourceforge.net/docman/index.php?group_id=1</a>
+and browse the available documentation for your particular environment.</p>
+<blockquote><cite>NOTE Other CVS clients are available for the Windows environment;
+in the past, I have used jCVS (<a href="http://www.jcvs.org">http://www.jcvs.org</a>
+) and the built-in CVS clients in development environments such as NetBeans
+(<a href="http://www.netbeans.org">http://www.netbeans.org</a> ) and Sun
+ONE Studio (<a
+ href="http://wwws.sun.com/software/product_categories/development_tools.html">http://wwws.sun.com/software/product_categories/development_tools.html</a>
+). I chose to use the WinCVS client for SourceForge because the SourceForge
+instructions give explicit details on setting up WinCVS and PuTTY. If you
+choose one of the other CVS mechanisms, you will probably still need to use
+PuTTY unless your chosen environment ships with an SSh environment.</cite>
+</blockquote>
+<br>
+</body>
+</html>

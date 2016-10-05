@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/Company" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/Company" xmlns:intf="http://localhost:8080/axis/services/Company" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="urn:Company" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="urn:Company" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="CompanyAddress"><sequence><element name="addressLine1" nillable="true" type="xsd:string"/><element name="addressLine2" nillable="true" type="xsd:string"/><element name="city" nillable="true" type="xsd:string"/><element name="state" nillable="true" type="xsd:string"/><element name="zipCode" nillable="true" type="xsd:string"/></sequence></complexType><element name="CompanyAddress" nillable="true" type="tns1:CompanyAddress"/></schema></wsdl:types>
+  <wsdl:message name="getAddressResponse">
+    <wsdl:part name="getAddressReturn" type="tns1:CompanyAddress"/>
+  </wsdl:message>
+  <wsdl:message name="getNameRequest">
+  </wsdl:message>
+  <wsdl:message name="setAddressRequest">
+    <wsdl:part name="address" type="tns1:CompanyAddress"/>
+  </wsdl:message>
+  <wsdl:message name="setAddressResponse">
+  </wsdl:message>
+  <wsdl:message name="getNameResponse">
+    <wsdl:part name="getNameReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getAddressRequest">
+  </wsdl:message>
+  <wsdl:portType name="CompanyImpl">
+    <wsdl:operation name="getAddress">
+      <wsdl:input message="intf:getAddressRequest" name="getAddressRequest"/>
+      <wsdl:output message="intf:getAddressResponse" name="getAddressResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getName">
+      <wsdl:input message="intf:getNameRequest" name="getNameRequest"/>
+      <wsdl:output message="intf:getNameResponse" name="getNameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setAddress" parameterOrder="address">
+      <wsdl:input message="intf:setAddressRequest" name="setAddressRequest"/>
+      <wsdl:output message="intf:setAddressResponse" name="setAddressResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CompanySoapBinding" type="intf:CompanyImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAddress">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getAddressRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Company" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getAddressResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Company" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Company" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Company" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setAddress">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setAddressRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Company" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setAddressResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Company" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CompanyImplService">
+    <wsdl:port binding="intf:CompanySoapBinding" name="Company">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/Company"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

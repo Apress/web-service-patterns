@@ -1,0 +1,45 @@
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by Sly (WorldCompany) -->
+<!ELEMENT jdo (package)+>
+<!ELEMENT package (class)+>
+<!ATTLIST package
+	name CDATA #REQUIRED
+>
+<!ELEMENT class (field | extension)*>
+<!ATTLIST class
+	name CDATA #REQUIRED
+	identity-type (application | datastore | none) "datastore"
+	objectid-class CDATA #IMPLIED
+	requires-extent (true | false) "true"
+	persistence-capable-superclass CDATA #IMPLIED
+>
+<!ELEMENT field ((collection | map)?, (extension)*)?>
+<!ATTLIST field
+	name CDATA #REQUIRED
+	persistence-modifier (persistent | transactional | none) #IMPLIED
+	primary-key (true | false) "false"
+	null-value (exception | default | none) "none"
+	default-fetch-group (true | false) #IMPLIED
+	embedded (true | false) #IMPLIED
+	inverse CDATA #IMPLIED
+>
+<!ELEMENT collection EMPTY>
+<!ATTLIST collection
+	element-type CDATA #IMPLIED
+	embedded-element (true | false) #IMPLIED
+	element-inverse CDATA #IMPLIED
+>
+<!ELEMENT map EMPTY>
+<!ATTLIST map
+	key-type CDATA #IMPLIED
+	embedded-key (true | false) #IMPLIED
+	key-inverse CDATA #IMPLIED
+	value-type CDATA #IMPLIED
+	embedded-value (true | false) #IMPLIED
+	value-inverse CDATA #IMPLIED
+>
+<!ELEMENT extension EMPTY>
+<!ATTLIST extension
+	vendor-name CDATA #REQUIRED
+	key CDATA #IMPLIED
+	value CDATA #IMPLIED
+>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+
+<helpset version="1.0">
+  <title>Together Context Help</title>
+
+  <maps>
+    <mapref location="file:C:\TogetherSoft\Together6.0\help\context\xml\map0.xml"/>
+    <mapref location="file:C:\TogetherSoft\Together6.0\help\context\xml\map1.xml"/>
+    <mapref location="file:C:\TogetherSoft\Together6.0\help\context\xml\map2.xml"/>
+  </maps>
+
+  <view>
+    <name>Index</name>
+    <label>TogetherJ Help</label>
+    <type>com.togethersoft.modules.help.ui.plaf.IndexNavigatorView</type>
+    <data>file:C:\TogetherSoft\Together6.0\help\context\xml\index0.xml</data>
+  </view>
+
+  <view>
+    <name>Index</name>
+    <label>More Help</label>
+    <type>com.togethersoft.modules.help.ui.plaf.IndexNavigatorView</type>
+    <data>file:C:\TogetherSoft\Together6.0\help\context\xml\index1.xml</data>
+  </view>
+
+  <view>
+    <name>Index</name>
+    <label>untitled1</label>
+    <type>com.togethersoft.modules.help.ui.plaf.IndexNavigatorView</type>
+    <data>file:C:\TogetherSoft\Together6.0\help\context\xml\index2.xml</data>
+  </view>
+
+</helpset>

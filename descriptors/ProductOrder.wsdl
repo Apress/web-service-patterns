@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/ProductOrder" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/ProductOrder" xmlns:intf="http://localhost:8080/axis/services/ProductOrder" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="Map"><sequence><element maxOccurs="unbounded" minOccurs="0" name="item"><complexType><all><element name="key" type="xsd:anyType"/><element name="value" type="xsd:anyType"/></all></complexType></element></sequence></complexType><element name="Map" nillable="true" type="apachesoap:Map"/></schema><schema targetNamespace="http://localhost:8080/axis/services/ProductOrder" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_xsd_string"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/></restriction></complexContent></complexType><element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/><complexType name="ArrayOf_xsd_int"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:int[]"/></restriction></complexContent></complexType><element name="ArrayOf_xsd_int" nillable="true" type="impl:ArrayOf_xsd_int"/></schema></wsdl:types>
+  <wsdl:message name="getStatusRequest">
+    <wsdl:part name="orderId" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="createProductOrderRequest">
+  </wsdl:message>
+  <wsdl:message name="setDataResponse1">
+  </wsdl:message>
+  <wsdl:message name="setDataRequest">
+    <wsdl:part name="data" type="apachesoap:Map"/>
+  </wsdl:message>
+  <wsdl:message name="processOrderResponse">
+  </wsdl:message>
+  <wsdl:message name="processOrderRequest">
+  </wsdl:message>
+  <wsdl:message name="setDataRequest1">
+    <wsdl:part name="customer" type="xsd:string"/>
+    <wsdl:part name="productSkus" type="intf:ArrayOf_xsd_string"/>
+    <wsdl:part name="quantity" type="intf:ArrayOf_xsd_int"/>
+  </wsdl:message>
+  <wsdl:message name="setDataResponse">
+  </wsdl:message>
+  <wsdl:message name="createProductOrderResponse">
+    <wsdl:part name="createProductOrderReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusResponse">
+    <wsdl:part name="getStatusReturn" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:portType name="ProductOrderImpl">
+    <wsdl:operation name="getStatus" parameterOrder="orderId">
+      <wsdl:input message="intf:getStatusRequest" name="getStatusRequest"/>
+      <wsdl:output message="intf:getStatusResponse" name="getStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setData" parameterOrder="data">
+      <wsdl:input message="intf:setDataRequest" name="setDataRequest"/>
+      <wsdl:output message="intf:setDataResponse" name="setDataResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setData" parameterOrder="customer productSkus quantity">
+      <wsdl:input message="intf:setDataRequest1" name="setDataRequest1"/>
+      <wsdl:output message="intf:setDataResponse1" name="setDataResponse1"/>
+    </wsdl:operation>
+    <wsdl:operation name="createProductOrder">
+      <wsdl:input message="intf:createProductOrderRequest" name="createProductOrderRequest"/>
+      <wsdl:output message="intf:createProductOrderResponse" name="createProductOrderResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="processOrder">
+      <wsdl:input message="intf:processOrderRequest" name="processOrderRequest"/>
+      <wsdl:output message="intf:processOrderResponse" name="processOrderResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductOrderSoapBinding" type="intf:ProductOrderImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getStatus">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getStatusRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getStatusResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setData">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setDataRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setDataResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setData">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setDataRequest1">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setDataResponse1">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createProductOrder">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="createProductOrderRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="createProductOrderResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="processOrder">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="processOrderRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="processOrderResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrder" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductOrderImplService">
+    <wsdl:port binding="intf:ProductOrderSoapBinding" name="ProductOrder">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/ProductOrder"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

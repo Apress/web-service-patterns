@@ -1,0 +1,148 @@
+<html>
+
+<head>
+<title>Errata for Web Service Design Patterns: Java Edition</title>
+
+<!-- Styles -->
+<style type="text/css">
+    body { 
+        color: black;
+        font-family: verdana, arial, helvetica, sans-serif;
+    }
+    
+    p {
+        font-family: verdana, arial, helvetica, sans-serif;
+        text-align: justify;
+    }
+    
+    a:link, a:active, a:visited {
+        color: red;
+    }
+    
+    tr.alt {
+        background-color:#eeeeee;
+    }
+    
+    td {
+        font-family: verdana, arial, helvetica, sans-serif;
+    }
+    
+    ol {
+        font-family: verdana, arial, helvetica, sans-serif;
+    }
+    
+    ul {
+        list-style-type: square;
+        text-align: justify;
+    }
+    
+    h1 {
+        font-family: verdana, arial, helvetica, sans-serif;
+    }
+    
+    table { 
+        border-color: black;
+        border-style: solid;
+    }
+    
+    .table-header {
+        background-color:red;
+        color: black;
+        font-weight: bold;
+    }
+    
+</style>
+
+</head>
+
+<body>
+&lt;<a href="mailto:pmonday@attbi.com">pmonday@attbi.com</a>&gt;
+<h1>Errata</h1>
+<h2>Chapter 4</h2>
+<p>
+<ul>
+<li>Table 4-1, the files CustomerCollectionImpl.java, CustomerImpl.java
+ CustomerInformationImpl.java are located in
+src\com\servicefoundry\books\webservices\entities (not entitities)</li>
+</ul>
+</p>
+<h2>Chapter 5</h2>
+<p>
+<ul>
+<li>Table 5-2, the file Publish.java is located within the "src" directory, so 
+the complete path is
+src\com\servicefoundry\books\webservices\util</li>
+</ul>
+</p>
+<h2>Chapter 8</h2>
+<p>
+<ul>
+<li>The code in the book does <i>not</i> match the source code. I've been
+working to refactor the source code a bit with respect to how it handles
+persistence and the underlying JDO implementation.</li>
+<li>There is an issue
+with updating and maintaining multiple transactions not discussed in the book.
+Rather than taking the approach that a business process contains a single,
+monolithic transaction, the code maintains that each business activity is
+a single transaction (this differs than the source code in the book which
+attempts to maintain a single, monolithic transaction).
+</li>
+<li>Make sure you've updated ProductOrderTest.java with customer 
+and product skus that match the data residing in your database.
+You can query your customer by opening the MySqlManager tool from
+the MySql .\bin directory (reference Appendix A) and running the
+query "select customerId from wsbook.csbwe_customerimpl;". You can obtain a
+product key to roder by running the query 
+"select sku from wsbook.csbwe_roastedcoffeebeansimpl;". You can get away
+with doing an "ant build" and not redeploying the services, since you
+are only effecting a client program, not a service.
+</li>
+</ul>
+</p>
+<h2>Chapter 9</h2>
+<p>
+<ul>
+<li>The Ant target in Table 9-3 is incorrect. The correct target is
+"testasyncproductorder". </li>
+<li>Make sure you've updated ProductOrderTest.java with customer 
+and product skus that match the data residing in your database (see
+the Chapter 8 errata for more information).
+</li>
+</ul>
+</p>
+<h2>Chapter 10</h2>
+<p>
+<ul>
+<li>Table 10-3 should include a pointer to 
+src\com\servicefoundry\books\webservices\patterns\eventmonitor\Client.java
+and
+src\com\servicefoundry\books\webservices\patterns\eventmonitor\ModifyOrderStatus.java
+</li>
+<li>
+You are required to have an available order before running the Ant targets. The
+Ant targets prompt you for the order number. You can use the order number printed
+from Chapter 8 or Chapter 9 as input to the client side programs. The <b>SAME</b>
+order number should be used for both Ant targets (testeventmonitor and changeorderstatus).
+</li>
+<li>The changeorderstatus Ant target requires a second parameter, the integer value
+to change the order status to. You will be prompted for this parameter. Changing the
+order status to the same value as previously entered should NOT prompt the event monitor
+to react. Changing the order status more than once between event monitor polls (5 seconds) will
+yield only a single event monitor trigger.</li>
+</ul>
+</p>
+<h2>Chapter 14</h2>
+<p>
+<ul>
+<li>The socket listening program is currently in debug. I am not able
+to generate a proper response for Axis during the last builds.  Hopefully
+I'll have this bug fixed soon. I actually believe the error is in
+the way I'm retrieving the message and handling the socket, or possibly
+in how Java is dealing with the socket between the reading and writing phase.
+Argh, this is one of the problems with Faux Implementation...fragility.</li>
+</ul>
+</p>
+
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/Warehouse" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/Warehouse" xmlns:intf="http://localhost:8080/axis/services/Warehouse" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="urn:WarehouseCollection" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="urn:WarehouseCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="WarehouseProduct"><sequence><element name="enterWarehouseDate" nillable="true" type="xsd:dateTime"/><element name="quantity" type="xsd:int"/><element name="sku" nillable="true" type="xsd:string"/></sequence></complexType><complexType name="WarehouseInventoryItem"><sequence><element name="enterWarehouseDate" nillable="true" type="xsd:dateTime"/><element name="quantity" type="xsd:int"/><element name="sku" nillable="true" type="xsd:string"/></sequence></complexType></schema><schema targetNamespace="http://localhost:8080/axis/services/Warehouse" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_tns1_WarehouseProduct"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:WarehouseProduct[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns1_WarehouseProduct" nillable="true" type="impl:ArrayOf_tns1_WarehouseProduct"/><complexType name="ArrayOf_tns1_WarehouseInventoryItem"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:WarehouseInventoryItem[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns1_WarehouseInventoryItem" nillable="true" type="impl:ArrayOf_tns1_WarehouseInventoryItem"/></schema></wsdl:types>
+  <wsdl:message name="addProductToWarehouseRequest">
+    <wsdl:part name="sku" type="xsd:string"/>
+    <wsdl:part name="quantity" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="addInventoryItemToWarehouseRequest">
+    <wsdl:part name="sku" type="xsd:string"/>
+    <wsdl:part name="quantity" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsInWarehouseResponse">
+    <wsdl:part name="getInventoryItemsInWarehouseReturn" type="intf:ArrayOf_tns1_WarehouseInventoryItem"/>
+  </wsdl:message>
+  <wsdl:message name="getProductsInWarehouseResponse">
+    <wsdl:part name="getProductsInWarehouseReturn" type="intf:ArrayOf_tns1_WarehouseProduct"/>
+  </wsdl:message>
+  <wsdl:message name="removeInventoryItemFromWarehouseRequest">
+    <wsdl:part name="sku" type="xsd:string"/>
+    <wsdl:part name="quantity" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="removeProductFromWarehouseRequest">
+    <wsdl:part name="sku" type="xsd:string"/>
+    <wsdl:part name="quantity" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsInWarehouseBySkuResponse">
+    <wsdl:part name="getInventoryItemsInWarehouseBySkuReturn" type="intf:ArrayOf_tns1_WarehouseInventoryItem"/>
+  </wsdl:message>
+  <wsdl:message name="getProductsInWarehouseBySkuResponse">
+    <wsdl:part name="getProductsInWarehouseBySkuReturn" type="intf:ArrayOf_tns1_WarehouseProduct"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsInWarehouseBySkuRequest">
+    <wsdl:part name="sku" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getProductsInWarehouseBySkuRequest">
+    <wsdl:part name="sku" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="removeInventoryItemFromWarehouseResponse">
+    <wsdl:part name="removeInventoryItemFromWarehouseReturn" type="intf:ArrayOf_tns1_WarehouseInventoryItem"/>
+  </wsdl:message>
+  <wsdl:message name="removeProductFromWarehouseResponse">
+    <wsdl:part name="removeProductFromWarehouseReturn" type="intf:ArrayOf_tns1_WarehouseProduct"/>
+  </wsdl:message>
+  <wsdl:message name="addProductToWarehouseResponse">
+  </wsdl:message>
+  <wsdl:message name="addInventoryItemToWarehouseResponse">
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsInWarehouseRequest">
+  </wsdl:message>
+  <wsdl:message name="getProductsInWarehouseRequest">
+  </wsdl:message>
+  <wsdl:portType name="WarehouseImpl">
+    <wsdl:operation name="getProductsInWarehouse">
+      <wsdl:input message="intf:getProductsInWarehouseRequest" name="getProductsInWarehouseRequest"/>
+      <wsdl:output message="intf:getProductsInWarehouseResponse" name="getProductsInWarehouseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItemsInWarehouse">
+      <wsdl:input message="intf:getInventoryItemsInWarehouseRequest" name="getInventoryItemsInWarehouseRequest"/>
+      <wsdl:output message="intf:getInventoryItemsInWarehouseResponse" name="getInventoryItemsInWarehouseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addInventoryItemToWarehouse" parameterOrder="sku quantity">
+      <wsdl:input message="intf:addInventoryItemToWarehouseRequest" name="addInventoryItemToWarehouseRequest"/>
+      <wsdl:output message="intf:addInventoryItemToWarehouseResponse" name="addInventoryItemToWarehouseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addProductToWarehouse" parameterOrder="sku quantity">
+      <wsdl:input message="intf:addProductToWarehouseRequest" name="addProductToWarehouseRequest"/>
+      <wsdl:output message="intf:addProductToWarehouseResponse" name="addProductToWarehouseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeProductFromWarehouse" parameterOrder="sku quantity">
+      <wsdl:input message="intf:removeProductFromWarehouseRequest" name="removeProductFromWarehouseRequest"/>
+      <wsdl:output message="intf:removeProductFromWarehouseResponse" name="removeProductFromWarehouseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeInventoryItemFromWarehouse" parameterOrder="sku quantity">
+      <wsdl:input message="intf:removeInventoryItemFromWarehouseRequest" name="removeInventoryItemFromWarehouseRequest"/>
+      <wsdl:output message="intf:removeInventoryItemFromWarehouseResponse" name="removeInventoryItemFromWarehouseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProductsInWarehouseBySku" parameterOrder="sku">
+      <wsdl:input message="intf:getProductsInWarehouseBySkuRequest" name="getProductsInWarehouseBySkuRequest"/>
+      <wsdl:output message="intf:getProductsInWarehouseBySkuResponse" name="getProductsInWarehouseBySkuResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItemsInWarehouseBySku" parameterOrder="sku">
+      <wsdl:input message="intf:getInventoryItemsInWarehouseBySkuRequest" name="getInventoryItemsInWarehouseBySkuRequest"/>
+      <wsdl:output message="intf:getInventoryItemsInWarehouseBySkuResponse" name="getInventoryItemsInWarehouseBySkuResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WarehouseSoapBinding" type="intf:WarehouseImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getProductsInWarehouse">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductsInWarehouseRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductsInWarehouseResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItemsInWarehouse">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getInventoryItemsInWarehouseRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getInventoryItemsInWarehouseResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addInventoryItemToWarehouse">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addInventoryItemToWarehouseRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addInventoryItemToWarehouseResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addProductToWarehouse">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addProductToWarehouseRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addProductToWarehouseResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeProductFromWarehouse">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeProductFromWarehouseRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeProductFromWarehouseResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeInventoryItemFromWarehouse">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeInventoryItemFromWarehouseRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeInventoryItemFromWarehouseResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductsInWarehouseBySku">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductsInWarehouseBySkuRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductsInWarehouseBySkuResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItemsInWarehouseBySku">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getInventoryItemsInWarehouseBySkuRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getInventoryItemsInWarehouseBySkuResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Warehouse" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WarehouseImplService">
+    <wsdl:port binding="intf:WarehouseSoapBinding" name="Warehouse">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/Warehouse"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

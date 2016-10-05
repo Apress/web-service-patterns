@@ -1,0 +1,106 @@
+
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <service name="SmallCompanyImpl" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.SmallCompanyImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="getName setName"/>
+ </service>
+ <service name="CustomerCollection" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.CustomerCollectionImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="*"/>
+  <beanMapping qname="myNS:Address" xmlns:myNS="urn:CustomerCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.AddressImpl"/>
+  <beanMapping qname="myNS:CustomerSummaryInformation" xmlns:myNS="urn:CustomerCollection2"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.CustomerSummaryInformation"/>
+  <beanMapping qname="myNS:CustomerInformation" xmlns:myNS="urn:CustomerCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.CustomerInformationImpl"/>
+  <beanMapping qname="myNS:InternetAddress" xmlns:myNS="urn:CustomerCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.InternetAddressImpl"/>
+  <beanMapping qname="myNS:Customer" xmlns:myNS="urn:CustomerCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.CustomerImpl"/>
+  <beanMapping qname="myNS:CustomerKey" xmlns:myNS="urn:CustomerCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.CustomerKey"/>
+  <beanMapping qname="myNS:CreditAccount" xmlns:myNS="urn:CustomerCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.CreditAccountImpl"/>
+ </service>
+ <service name="ProductCollection" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.ProductCollectionImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="*"/>
+  <beanMapping qname="myNS:Product" xmlns:myNS="urn:ProductCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.ProductImpl"/>
+  <beanMapping qname="myNS:RoastedCoffeeBeans" xmlns:myNS="urn:ProductCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.RoastedCoffeeBeansImpl"/>
+  <beanMapping qname="myNS:ProductSummaryInformation" xmlns:myNS="urn:ProductCollection2"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.ProductSummaryInformation"/>
+ </service>
+ <service name="InventoryCollection" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.InventoryCollectionImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="*"/>
+  <beanMapping qname="myNS:InventoryItem" xmlns:myNS="urn:InventoryCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.InventoryItemImpl"/>
+  <beanMapping qname="myNS:UnroastedCoffeeBeans" xmlns:myNS="urn:InventoryCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.UnroastedCoffeeBeansImpl"/>
+ </service>
+ <service name="Warehouse" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.WarehouseImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="getId, setId, getProductsInWarehouse, getInventoryItemsInWarehouse, addInventoryItemToWarehouse, addProductToWarehouse, removeProductFromWarehouse, removeInventoryItemFromWarehouse, getProductsInWarehouseBySku, getInventoryItemsInWarehouseBySku"/>
+  <beanMapping qname="myNS:WarehouseInventoryItem" xmlns:myNS="urn:WarehouseCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.WarehouseInventoryItemImpl"/>
+  <beanMapping qname="myNS:WarehouseProduct" xmlns:myNS="urn:WarehouseCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.WarehouseProductImpl"/>
+ </service>
+ <service name="Company" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.CompanyImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="*"/>
+  <beanMapping qname="myNS:CompanyAddress" xmlns:myNS="urn:Company"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.AddressImpl"/>
+ </service>
+ <service name="ProductOrderManager" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.processes.ProductOrderManager"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="createProductOrder,getStatus,addObserver,deleteObserver"/>
+ </service>
+ <service name="ProductOrderObserver" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.patterns.observer.ProductOrderObserver"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="update"/>
+ </service>
+ <service name="EventService" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.eventservice.EventService"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="addSubscriber,publish,removeSubscriber"/>
+ </service>
+ <service name="Subscriber" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.eventservice.Subscriber"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="update"/>
+ </service>
+ <service name="SubscriberTest" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.tests.SubscriberTest"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="update"/>
+ </service>
+ <service name="ProductOrder" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.processes.ProductOrderImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="setData,createProductOrder,processOrder,getStatus"/>
+ </service>
+ <service name="OrderCollection" provider="java:RPC">
+  <parameter name="className" value="com.servicefoundry.books.webservices.entities.OrderCollectionImpl"/>
+  <parameter name="scope" value="Application"/>
+  <parameter name="allowedMethods" value="addOrder, getOrder, getOrders, getOrdersByCustomer, removeOrder, changeOrderStatus"/>
+  <beanMapping qname="myNS:OrderKey" xmlns:myNS="urn:OrderCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.OrderKey"/>
+  <beanMapping qname="myNS:OrderImpl" xmlns:myNS="urn:OrderCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.OrderImpl"/>
+  <beanMapping qname="myNS:OrderLineImpl" xmlns:myNS="urn:OrderCollection"
+               languageSpecificType="java:com.servicefoundry.books.webservices.entities.OrderLineImpl"/>
+ </service>
+</deployment>
+

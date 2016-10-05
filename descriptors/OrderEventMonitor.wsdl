@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ <wsdl:definitions targetNamespace="http://localhost:8080/axis/services/OrderEventMonitor" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:impl="http://localhost:8080/axis/services/OrderEventMonitor-impl" xmlns:intf="http://localhost:8080/axis/services/OrderEventMonitor" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:message name="setStatusResponse" /> 
+  <wsdl:message name="getStatusRequest" /> 
+ <wsdl:message name="getStatusResponse">
+  <wsdl:part name="return" type="xsd:int" /> 
+  </wsdl:message>
+ <wsdl:message name="setStatusRequest">
+  <wsdl:part name="in0" type="xsd:int" /> 
+  </wsdl:message>
+ <wsdl:portType name="OrderImpl">
+<wsdl:operation name="getStatus">
+    <wsdl:input message="intf:getStatusRequest" /> 
+    <wsdl:output message="intf:getStatusResponse" /> 
+</wsdl:operation>
+<wsdl:operation name="setStatus" parameterOrder="in0">
+    <wsdl:input message="intf:setStatusRequest" /> 
+    <wsdl:output message="intf:setStatusResponse" /> 
+</wsdl:operation>
+</wsdl:portType>
+ <wsdl:binding name="OrderEventMonitorSoapBinding" type="intf:OrderImpl">
+  <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" /> 
+ <wsdl:operation name="getStatus">
+  <wsdlsoap:operation soapAction="" /> 
+ <wsdl:input>
+  <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="getStatus" use="encoded" /> 
+  </wsdl:input>
+ <wsdl:output>
+  <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderEventMonitor" use="encoded" /> 
+  </wsdl:output>
+  </wsdl:operation>
+ <wsdl:operation name="setStatus">
+  <wsdlsoap:operation soapAction="" /> 
+ <wsdl:input>
+  <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="setStatus" use="encoded" /> 
+  </wsdl:input>
+ <wsdl:output>
+  <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderEventMonitor" use="encoded" /> 
+  </wsdl:output>
+  </wsdl:operation>
+  </wsdl:binding>
+<wsdl:service name="OrderImplService">
+    <wsdl:port binding="intf:OrderEventMonitorSoapBinding" name="OrderEventMonitor">
+        <wsdlsoap:address location="http://localhost:8080/axis/services/OrderEventMonitor" /> 
+    </wsdl:port>
+</wsdl:service>
+  </wsdl:definitions>

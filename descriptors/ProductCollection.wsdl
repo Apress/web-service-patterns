@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/ProductCollection" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/ProductCollection" xmlns:intf="http://localhost:8080/axis/services/ProductCollection" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://entities.webservices.books.servicefoundry.com" xmlns:tns2="urn:ProductCollection" xmlns:tns3="urn:ProductCollection2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://entities.webservices.books.servicefoundry.com" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ProductKey"><sequence><element name="sku" nillable="true" type="xsd:string"/></sequence></complexType><element name="ProductKey" nillable="true" type="tns1:ProductKey"/></schema><schema targetNamespace="urn:ProductCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="Product"><sequence><element name="description" nillable="true" type="xsd:string"/><element name="name" nillable="true" type="xsd:string"/><element name="retailPrice" type="xsd:float"/><element name="sku" nillable="true" type="xsd:string"/><element name="wholesalePrice" type="xsd:float"/></sequence></complexType><element name="Product" nillable="true" type="tns2:Product"/><complexType name="RoastedCoffeeBeans"><complexContent><extension base="tns2:Product"><sequence><element name="pounds" type="xsd:float"/><element name="type" type="xsd:int"/></sequence></extension></complexContent></complexType><element name="RoastedCoffeeBeans" nillable="true" type="tns2:RoastedCoffeeBeans"/></schema><schema targetNamespace="http://localhost:8080/axis/services/ProductCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_tns2_Product"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:Product[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns2_Product" nillable="true" type="impl:ArrayOf_tns2_Product"/><complexType name="ArrayOf_tns2_RoastedCoffeeBeans"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:RoastedCoffeeBeans[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns2_RoastedCoffeeBeans" nillable="true" type="impl:ArrayOf_tns2_RoastedCoffeeBeans"/><complexType name="ArrayOf_tns3_ProductSummaryInformation"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns3:ProductSummaryInformation[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns3_ProductSummaryInformation" nillable="true" type="impl:ArrayOf_tns3_ProductSummaryInformation"/><complexType name="ArrayOf_xsd_string"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/></restriction></complexContent></complexType><element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/></schema><schema targetNamespace="urn:ProductCollection2" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ProductSummaryInformation"><sequence><element name="description" nillable="true" type="xsd:string"/><element name="name" nillable="true" type="xsd:string"/><element name="sku" nillable="true" type="xsd:string"/><element name="retailPrice" type="xsd:float"/></sequence></complexType></schema></wsdl:types>
+  <wsdl:message name="getProductsResponse">
+    <wsdl:part name="getProductsReturn" type="intf:ArrayOf_tns2_Product"/>
+  </wsdl:message>
+  <wsdl:message name="getProductSummaryInformationsRequest">
+  </wsdl:message>
+  <wsdl:message name="getProductResponse">
+    <wsdl:part name="getProductReturn" type="tns2:Product"/>
+  </wsdl:message>
+  <wsdl:message name="getProductsByNameResponse">
+    <wsdl:part name="getProductsByNameReturn" type="intf:ArrayOf_tns2_Product"/>
+  </wsdl:message>
+  <wsdl:message name="getProductSummaryInformationsResponse1">
+    <wsdl:part name="getProductSummaryInformationsReturn" type="intf:ArrayOf_tns3_ProductSummaryInformation"/>
+  </wsdl:message>
+  <wsdl:message name="addRoastedCoffeeBeansProductResponse">
+  </wsdl:message>
+  <wsdl:message name="getProductsByNameRequest">
+    <wsdl:part name="name" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getProductSummaryInformationsRequest1">
+    <wsdl:part name="keys" type="intf:ArrayOf_xsd_string"/>
+  </wsdl:message>
+  <wsdl:message name="getProductRequest">
+    <wsdl:part name="key" type="tns1:ProductKey"/>
+  </wsdl:message>
+  <wsdl:message name="getProductSummaryInformationsResponse">
+    <wsdl:part name="getProductSummaryInformationsReturn" type="intf:ArrayOf_tns3_ProductSummaryInformation"/>
+  </wsdl:message>
+  <wsdl:message name="getProductsRequest">
+  </wsdl:message>
+  <wsdl:message name="addRoastedCoffeeBeansProductRequest">
+    <wsdl:part name="product" type="tns2:RoastedCoffeeBeans"/>
+  </wsdl:message>
+  <wsdl:message name="setProductSummaryInformationsRequest">
+    <wsdl:part name="infos" type="intf:ArrayOf_tns3_ProductSummaryInformation"/>
+  </wsdl:message>
+  <wsdl:message name="addProductResponse">
+  </wsdl:message>
+  <wsdl:message name="getRoastedCoffeeBeansProductsResponse">
+    <wsdl:part name="getRoastedCoffeeBeansProductsReturn" type="intf:ArrayOf_tns2_RoastedCoffeeBeans"/>
+  </wsdl:message>
+  <wsdl:message name="removeProductResponse">
+  </wsdl:message>
+  <wsdl:message name="getRoastedCoffeeBeansByNameResponse">
+    <wsdl:part name="getRoastedCoffeeBeansByNameReturn" type="intf:ArrayOf_tns2_RoastedCoffeeBeans"/>
+  </wsdl:message>
+  <wsdl:message name="getRoastedCoffeeBeansProductsRequest">
+  </wsdl:message>
+  <wsdl:message name="setProductSummaryInformationsResponse">
+  </wsdl:message>
+  <wsdl:message name="addProductRequest">
+    <wsdl:part name="product" type="tns2:Product"/>
+  </wsdl:message>
+  <wsdl:message name="removeProductRequest">
+    <wsdl:part name="key" type="tns1:ProductKey"/>
+  </wsdl:message>
+  <wsdl:message name="getRoastedCoffeeBeansByNameRequest">
+    <wsdl:part name="name" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="ProductCollectionImpl">
+    <wsdl:operation name="removeProduct" parameterOrder="key">
+      <wsdl:input message="intf:removeProductRequest" name="removeProductRequest"/>
+      <wsdl:output message="intf:removeProductResponse" name="removeProductResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProduct" parameterOrder="key">
+      <wsdl:input message="intf:getProductRequest" name="getProductRequest"/>
+      <wsdl:output message="intf:getProductResponse" name="getProductResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProducts">
+      <wsdl:input message="intf:getProductsRequest" name="getProductsRequest"/>
+      <wsdl:output message="intf:getProductsResponse" name="getProductsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getRoastedCoffeeBeansProducts">
+      <wsdl:input message="intf:getRoastedCoffeeBeansProductsRequest" name="getRoastedCoffeeBeansProductsRequest"/>
+      <wsdl:output message="intf:getRoastedCoffeeBeansProductsResponse" name="getRoastedCoffeeBeansProductsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getRoastedCoffeeBeansByName" parameterOrder="name">
+      <wsdl:input message="intf:getRoastedCoffeeBeansByNameRequest" name="getRoastedCoffeeBeansByNameRequest"/>
+      <wsdl:output message="intf:getRoastedCoffeeBeansByNameResponse" name="getRoastedCoffeeBeansByNameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addRoastedCoffeeBeansProduct" parameterOrder="product">
+      <wsdl:input message="intf:addRoastedCoffeeBeansProductRequest" name="addRoastedCoffeeBeansProductRequest"/>
+      <wsdl:output message="intf:addRoastedCoffeeBeansProductResponse" name="addRoastedCoffeeBeansProductResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProductsByName" parameterOrder="name">
+      <wsdl:input message="intf:getProductsByNameRequest" name="getProductsByNameRequest"/>
+      <wsdl:output message="intf:getProductsByNameResponse" name="getProductsByNameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addProduct" parameterOrder="product">
+      <wsdl:input message="intf:addProductRequest" name="addProductRequest"/>
+      <wsdl:output message="intf:addProductResponse" name="addProductResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProductSummaryInformations">
+      <wsdl:input message="intf:getProductSummaryInformationsRequest" name="getProductSummaryInformationsRequest"/>
+      <wsdl:output message="intf:getProductSummaryInformationsResponse" name="getProductSummaryInformationsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getProductSummaryInformations" parameterOrder="keys">
+      <wsdl:input message="intf:getProductSummaryInformationsRequest1" name="getProductSummaryInformationsRequest1"/>
+      <wsdl:output message="intf:getProductSummaryInformationsResponse1" name="getProductSummaryInformationsResponse1"/>
+    </wsdl:operation>
+    <wsdl:operation name="setProductSummaryInformations" parameterOrder="infos">
+      <wsdl:input message="intf:setProductSummaryInformationsRequest" name="setProductSummaryInformationsRequest"/>
+      <wsdl:output message="intf:setProductSummaryInformationsResponse" name="setProductSummaryInformationsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductCollectionSoapBinding" type="intf:ProductCollectionImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="removeProduct">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeProductRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeProductResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProduct">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProducts">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRoastedCoffeeBeansProducts">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getRoastedCoffeeBeansProductsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getRoastedCoffeeBeansProductsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRoastedCoffeeBeansByName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getRoastedCoffeeBeansByNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getRoastedCoffeeBeansByNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addRoastedCoffeeBeansProduct">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addRoastedCoffeeBeansProductRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addRoastedCoffeeBeansProductResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductsByName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductsByNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductsByNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addProduct">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addProductRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addProductResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductSummaryInformations">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductSummaryInformationsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductSummaryInformationsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProductSummaryInformations">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getProductSummaryInformationsRequest1">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getProductSummaryInformationsResponse1">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setProductSummaryInformations">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setProductSummaryInformationsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setProductSummaryInformationsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductCollectionImplService">
+    <wsdl:port binding="intf:ProductCollectionSoapBinding" name="ProductCollection">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/ProductCollection"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

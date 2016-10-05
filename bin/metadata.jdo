@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "jdo.dtd">
+<jdo>
+  <package name="com.servicefoundry.books.webservices.entities">
+    <class name="CustomerImpl" identity-type="application" objectid-class="CustomerKey">
+        <field name="customerId" primary-key="true"/>
+        <field name="firstName"/>
+        <field name="lastName"/>
+        <field name="customerInformation"/>
+        <field name="address"/>
+    </class>
+    <class name="AddressImpl" >
+        <field name="addressLine1"/>
+        <field name="addressLine2"/>
+        <field name="city"/>
+        <field name="state"/>
+        <field name="zipCode"/>
+    </class>
+    <class name="InternetAddressImpl" >
+        <field name="primaryEmailAddress"/>
+        <field name="secondaryEmailAddress"/>
+        <field name="primaryUrl"/>
+    </class>
+    <class name="CustomerInformationImpl" >
+        <field name="creditAccount"/>
+        <field name="shippingAddress" type="AddressImpl"/>
+        <field name="internetAddress" type="InternetAddressImpl"/>
+    </class>
+    <class name="CreditAccountImpl" >
+        <field name="defaultAccount"/>
+        <field name="account"/>
+        <field name="accountType"/>
+        <field name="expirationDate"/>
+    </class>
+    <class name="ProductImpl" 
+        identity-type="application" 
+        objectid-class="ProductKey">
+        <field name="description"/>
+        <field name="name"/>
+        <field name="sku" primary-key="true"/>
+        <field name="wholesalePrice"/>
+        <field name="retailPrice"/>
+    </class>
+    <class name="InventoryItemImpl" identity-type="application" objectid-class="ProductKey">
+        <field name="description"/>
+        <field name="name"/>
+        <field name="sku" primary-key="true"/>
+        <field name="purchasePrice"/>
+    </class>
+    <class name="RoastedCoffeeBeansImpl" 
+        persistence-capable-superclass="com.servicefoundry.books.webservices.entities.ProductImpl"
+        identity-type="application"
+        objectid-class="ProductKey">
+        <field name="sku" primary-key="true"/>
+        <field name="pounds"/>
+        <field name="type"/>
+    </class>
+    <class name="UnroastedCoffeeBeansImpl" persistence-capable-superclass="com.servicefoundry.books.webservices.entities.InventoryItemImpl">
+        <field name="pounds"/>
+        <field name="type"/>
+    </class>
+    <class name="WarehouseProductImpl">
+        <field name="enterWarehouseDate"/>
+        <field name="quantity"/>
+        <field name="sku"/>
+    </class>
+    <class name="WarehouseInventoryItemImpl">
+        <field name="enterWarehouseDate"/>
+        <field name="quantity"/>
+        <field name="sku"/>
+    </class>
+    <class name="UDDIKeyCache">
+        <field name="keys">
+        <collection element-type="java.lang.String">
+        </collection>
+        </field>
+    </class>
+    <class name="OrderImpl"
+        identity-type="application"
+        objectid-class="OrderKey">
+        <field name="status"/>
+        <field name="orderId" primary-key="true"/>
+        <field name="customerId"/>
+        <field name="orderLines">
+        <collection element-type="com.servicefoundry.books.webservices.entities.OrderLineImpl">
+        </collection>
+        </field>
+    </class>
+    <class name="OrderLineImpl">
+        <field name="productSku"/>
+        <field name="quantity"/>
+        <field name="unitPrice"/>
+    </class>
+
+  </package>
+</jdo>

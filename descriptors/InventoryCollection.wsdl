@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/InventoryCollection" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/InventoryCollection" xmlns:intf="http://localhost:8080/axis/services/InventoryCollection" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://entities.webservices.books.servicefoundry.com" xmlns:tns2="urn:InventoryCollection" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://entities.webservices.books.servicefoundry.com" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ProductKey"><sequence><element name="sku" nillable="true" type="xsd:string"/></sequence></complexType><element name="ProductKey" nillable="true" type="tns1:ProductKey"/></schema><schema targetNamespace="urn:InventoryCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="InventoryItem"><sequence><element name="description" nillable="true" type="xsd:string"/><element name="name" nillable="true" type="xsd:string"/><element name="purchasePrice" type="xsd:double"/><element name="sku" nillable="true" type="xsd:string"/></sequence></complexType><element name="InventoryItem" nillable="true" type="tns2:InventoryItem"/><complexType name="UnroastedCoffeeBeans"><complexContent><extension base="tns2:InventoryItem"><sequence><element name="pounds" type="xsd:float"/><element name="type" type="xsd:int"/></sequence></extension></complexContent></complexType><element name="UnroastedCoffeeBeans" nillable="true" type="tns2:UnroastedCoffeeBeans"/></schema><schema targetNamespace="http://localhost:8080/axis/services/InventoryCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_tns2_InventoryItem"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:InventoryItem[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns2_InventoryItem" nillable="true" type="impl:ArrayOf_tns2_InventoryItem"/><complexType name="ArrayOf_tns2_UnroastedCoffeeBeans"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:UnroastedCoffeeBeans[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns2_UnroastedCoffeeBeans" nillable="true" type="impl:ArrayOf_tns2_UnroastedCoffeeBeans"/></schema></wsdl:types>
+  <wsdl:message name="addInventoryItemResponse">
+  </wsdl:message>
+  <wsdl:message name="removeInventoryItemResponse">
+  </wsdl:message>
+  <wsdl:message name="addUnroastedCoffeeBeansInventoryItemRequest">
+    <wsdl:part name="item" type="tns2:UnroastedCoffeeBeans"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsByNameResponse">
+    <wsdl:part name="getInventoryItemsByNameReturn" type="intf:ArrayOf_tns2_InventoryItem"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemResponse">
+    <wsdl:part name="getInventoryItemReturn" type="tns2:InventoryItem"/>
+  </wsdl:message>
+  <wsdl:message name="getUnroastedCoffeeBeansByNameRequest">
+    <wsdl:part name="name" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsResponse">
+    <wsdl:part name="getInventoryItemsReturn" type="intf:ArrayOf_tns2_InventoryItem"/>
+  </wsdl:message>
+  <wsdl:message name="getUnroastedCoffeeBeansInventoryItemsRequest">
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemRequest">
+    <wsdl:part name="key" type="tns1:ProductKey"/>
+  </wsdl:message>
+  <wsdl:message name="getUnroastedCoffeeBeansInventoryItemsResponse">
+    <wsdl:part name="getUnroastedCoffeeBeansInventoryItemsReturn" type="intf:ArrayOf_tns2_UnroastedCoffeeBeans"/>
+  </wsdl:message>
+  <wsdl:message name="removeInventoryItemRequest">
+    <wsdl:part name="key" type="tns1:ProductKey"/>
+  </wsdl:message>
+  <wsdl:message name="getUnroastedCoffeeBeansByNameResponse">
+    <wsdl:part name="getUnroastedCoffeeBeansByNameReturn" type="intf:ArrayOf_tns2_UnroastedCoffeeBeans"/>
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsRequest">
+  </wsdl:message>
+  <wsdl:message name="addUnroastedCoffeeBeansInventoryItemResponse">
+  </wsdl:message>
+  <wsdl:message name="getInventoryItemsByNameRequest">
+    <wsdl:part name="name" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="addInventoryItemRequest">
+    <wsdl:part name="item" type="tns2:InventoryItem"/>
+  </wsdl:message>
+  <wsdl:portType name="InventoryCollectionImpl">
+    <wsdl:operation name="removeInventoryItem" parameterOrder="key">
+      <wsdl:input message="intf:removeInventoryItemRequest" name="removeInventoryItemRequest"/>
+      <wsdl:output message="intf:removeInventoryItemResponse" name="removeInventoryItemResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItem" parameterOrder="key">
+      <wsdl:input message="intf:getInventoryItemRequest" name="getInventoryItemRequest"/>
+      <wsdl:output message="intf:getInventoryItemResponse" name="getInventoryItemResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItems">
+      <wsdl:input message="intf:getInventoryItemsRequest" name="getInventoryItemsRequest"/>
+      <wsdl:output message="intf:getInventoryItemsResponse" name="getInventoryItemsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItemsByName" parameterOrder="name">
+      <wsdl:input message="intf:getInventoryItemsByNameRequest" name="getInventoryItemsByNameRequest"/>
+      <wsdl:output message="intf:getInventoryItemsByNameResponse" name="getInventoryItemsByNameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addInventoryItem" parameterOrder="item">
+      <wsdl:input message="intf:addInventoryItemRequest" name="addInventoryItemRequest"/>
+      <wsdl:output message="intf:addInventoryItemResponse" name="addInventoryItemResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getUnroastedCoffeeBeansInventoryItems">
+      <wsdl:input message="intf:getUnroastedCoffeeBeansInventoryItemsRequest" name="getUnroastedCoffeeBeansInventoryItemsRequest"/>
+      <wsdl:output message="intf:getUnroastedCoffeeBeansInventoryItemsResponse" name="getUnroastedCoffeeBeansInventoryItemsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getUnroastedCoffeeBeansByName" parameterOrder="name">
+      <wsdl:input message="intf:getUnroastedCoffeeBeansByNameRequest" name="getUnroastedCoffeeBeansByNameRequest"/>
+      <wsdl:output message="intf:getUnroastedCoffeeBeansByNameResponse" name="getUnroastedCoffeeBeansByNameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addUnroastedCoffeeBeansInventoryItem" parameterOrder="item">
+      <wsdl:input message="intf:addUnroastedCoffeeBeansInventoryItemRequest" name="addUnroastedCoffeeBeansInventoryItemRequest"/>
+      <wsdl:output message="intf:addUnroastedCoffeeBeansInventoryItemResponse" name="addUnroastedCoffeeBeansInventoryItemResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InventoryCollectionSoapBinding" type="intf:InventoryCollectionImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="removeInventoryItem">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeInventoryItemRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeInventoryItemResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItem">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getInventoryItemRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getInventoryItemResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItems">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getInventoryItemsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getInventoryItemsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInventoryItemsByName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getInventoryItemsByNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getInventoryItemsByNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addInventoryItem">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addInventoryItemRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addInventoryItemResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnroastedCoffeeBeansInventoryItems">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getUnroastedCoffeeBeansInventoryItemsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getUnroastedCoffeeBeansInventoryItemsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUnroastedCoffeeBeansByName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getUnroastedCoffeeBeansByNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getUnroastedCoffeeBeansByNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUnroastedCoffeeBeansInventoryItem">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addUnroastedCoffeeBeansInventoryItemRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addUnroastedCoffeeBeansInventoryItemResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/InventoryCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InventoryCollectionImplService">
+    <wsdl:port binding="intf:InventoryCollectionSoapBinding" name="InventoryCollection">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/InventoryCollection"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

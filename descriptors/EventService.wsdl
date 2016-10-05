@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/EventService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/EventService" xmlns:intf="http://localhost:8080/axis/services/EventService" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types/>
+  <wsdl:message name="addSubscriberResponse">
+  </wsdl:message>
+  <wsdl:message name="removeSubscriberResponse">
+  </wsdl:message>
+  <wsdl:message name="removeSubscriberRequest">
+    <wsdl:part name="topic" type="xsd:string"/>
+    <wsdl:part name="subscriptionUrl" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="publishResponse">
+  </wsdl:message>
+  <wsdl:message name="publishRequest">
+    <wsdl:part name="topic" type="xsd:string"/>
+    <wsdl:part name="data" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="addSubscriberRequest">
+    <wsdl:part name="topic" type="xsd:string"/>
+    <wsdl:part name="subscriptionUrl" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="EventService">
+    <wsdl:operation name="publish" parameterOrder="topic data">
+      <wsdl:input message="intf:publishRequest" name="publishRequest"/>
+      <wsdl:output message="intf:publishResponse" name="publishResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addSubscriber" parameterOrder="topic subscriptionUrl">
+      <wsdl:input message="intf:addSubscriberRequest" name="addSubscriberRequest"/>
+      <wsdl:output message="intf:addSubscriberResponse" name="addSubscriberResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeSubscriber" parameterOrder="topic subscriptionUrl">
+      <wsdl:input message="intf:removeSubscriberRequest" name="removeSubscriberRequest"/>
+      <wsdl:output message="intf:removeSubscriberResponse" name="removeSubscriberResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EventServiceSoapBinding" type="intf:EventService">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="publish">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="publishRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/EventService" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="publishResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/EventService" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addSubscriber">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addSubscriberRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/EventService" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addSubscriberResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/EventService" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeSubscriber">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeSubscriberRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/EventService" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeSubscriberResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/EventService" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EventServiceService">
+    <wsdl:port binding="intf:EventServiceSoapBinding" name="EventService">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/EventService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

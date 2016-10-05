@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="targets" name="build">
+
+  <!-- set global properties for this build taken from properties file.-->
+  <property file="build.properties"/>
+
+  <target description="removes all build files and directories" name="clean">
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${base}\stubs"/>
+    </target>
+  
+  <target depends="clean" description="prepare the source tree" name="prepare">
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build}/staging"/>
+    <mkdir dir="${build}/lib"/>
+    <mkdir dir="${build}/docs"/>
+    <mkdir dir="${build}/webapps"/>
+    <mkdir dir="${base}/stubs"/>
+    <mkdir dir="${build}/src"/>
+  </target>
+
+  <target depends="prepare,buildStubs" description="build all source" name="build">
+
+    <!--copy the lib directory to the build area-->
+    <copy todir="${build}/lib">
+      <fileset dir="${libDir}">
+      </fileset>
+    </copy>
+    
+    <!-- copy the source code to the build directory-->
+    <copy file="${base}/bin/build.properties" todir="${build}/staging"/>    
+    
+    <copy todir="${build}/src">
+      <fileset dir="${srcDir}" includes="**/*.java"/>
+    </copy>
+      <delete dir="${build}/src/com/servicefoundry/books/webservices/models"/>
+      <delete dir="${build}/src/examples"/>
+
+    
+        <!-- Compile the stubs from ${base}/stubs into ${build} -->
+    <javac debug="true" deprecation="true" destdir="${build}/staging" srcdir="${base}/stubs">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/src"/>
+            </classpath>
+    </javac>
+    
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac debug="true" deprecation="true" destdir="${build}/staging" srcdir="${build}/src">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            </classpath>
+    </javac>
+    
+        <rmic base="${build}\staging" classname="com.servicefoundry.books.webservices.eventservice.ApplicationSubscriberImpl"/>
+    </target>
+
+    <target depends="build,enhance" description="create distribution jar and war files" name="dist">
+    <!-- Create the distribution jar file(s). -->
+    <!-- Create a single jar file for the classes and wsdl -->
+    <jar basedir="${build}/staging" jarfile="${build}/lib/${jarPrefix}_classes.jar"/>
+    
+    <!-- Create individual .war files -->
+    
+  </target>
+
+  <target description="builds the javadocs for the sources" name="docs">
+
+      <javadoc destdir="${build}\docs" packagenames="com.servicefoundry.*" sourcePath="${srcDir}">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+        </classpath>
+        </javadoc>
+    </target>
+    
+  <target description="displays the build targets" name="targets">
+    <echo message=""/> 
+    <echo message="ANT build targets"/> 
+    <echo message=""/> 
+    <echo message="The following targets are available:"/> 
+    <echo message=""/> 
+    <echo message="   prepare - Prepares the target directories."/> 
+    <echo message="   build - Builds the complete source tree."/> 
+    <echo message="   clean - Cleans the workspace."/> 
+    <echo message="   dist - Builds distribution jar file(s)."/> 
+    <echo message="   docs - Builds the JavaDoc for the classes."/>
+    <echo message="   deploy - Deploy all available Web Services."/>
+    <echo message="   undeploy - Undeploy Web Services."/>
+    <echo message="   listservices - List Web Services from AXIS admin."/>
+    <echo message="   buildWSDL - Builds WSDL files"/>
+    <echo message="   buildStubs - Build stubs for web services from wsdl."/>
+    <echo message="   targets - Displays target list."/> 
+    <echo message="   enhance - Does JDO Enhancement of Classes."/>
+    <echo message="   buildtables - Build tables."/>
+    <echo message="   testcustomercollection - Test the Customer Collection"/>
+    <echo message="   DirectSOAPTestClient - Chapter 3 Example, Tests a Simple Company Service"/>
+    <echo message="   testcustomercollectionwebservice - Chapter 4 Example, Tests the Customer Collection Web Service"/>
+    <echo message="   testcompany - Test Company Business Object"/>
+    <echo message="   populate - Populate data through Web services"/>
+    <echo message="   publish - Publish P.T. Monday to UDDI"/>
+    <echo message="   unpublish - Remove company and services from UDDI"/>
+    <echo message="   finishinstall - Run once after sample install"/>
+  </target>
+    <target name="deploy">
+        <!--copy the class files to the axis deployment directories -->
+        <copy file="${base}\bin\metadata.jdo" todir="${axisDeployDir}\WEB-INF\classes"/>
+        <copy file="${jdo}\bin\jdo.dtd" todir="${axisDeployDir}\WEB-INF\classes"/>
+        <copy file="${jdo}\bin\dictionary.properties" todir="${axisDeployDir}\WEB-INF\classes"/>
+        <copy file="${jdo}\bin\libelis.lic" todir="${axisDeployDir}\WEB-INF\classes"/>
+         <copy todir="${axisDeployDir}/WEB-INF/classes">
+          <fileset dir="${build}/staging"/>
+          
+         </copy>
+       
+        <!--deploy the service -->
+        <java classname="org.apache.axis.client.AdminClient" fork="yes">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/src"/>
+        </classpath>
+            <arg value="-l${axisdeployurl}"/>
+            <arg value="${base}/descriptors/services.wsdd"/>
+        </java>
+    </target>
+    
+    <target name="undeploy">
+        <java classname="org.apache.axis.client.AdminClient" fork="yes">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/src"/>
+        </classpath>
+        <arg value="-l${axisdeployurl}"/>
+        <arg value="${base}/descriptors/undeploy_services.wsdd"/>
+        </java>
+        
+        <delete dir="${axisDeployDir}/WEB-INF/classes/com/servicefoundry"/>
+        
+    </target>
+    
+    <target name="listservices">
+        <java classname="org.apache.axis.client.AdminClient" fork="yes">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/src"/>
+        </classpath>
+        <arg value="-l${axisdeployurl}"/>
+        <arg value="list"/>
+        </java>
+    </target>    
+
+    <target description="build WSDL files from Java" name="buildWSDL">
+    
+        <!--wsdl already exists for event monitor so build java stubs -->
+        <java classname="org.apache.axis.wsdl.Java2WSDL" fork="yes">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/src"/>
+        </classpath>
+            <arg value="-o${base}/descriptors/SmallCompanyImpl.wsdl"/>
+            <arg value="-l${axisbaseserviceurl}/com/servicefoundry/books/webservices/entities/SmallCompanyImpl.jws"/>
+            <arg value="com.servicefoundry.books.webservices.entities.SmallCompanyImpl"/>
+        </java>
+
+    </target>
+    <target description="build stubs for use by clients from wsdl files" name="buildStubs">
+    
+        <!--wsdl already exists for event monitor so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.patterns.eventmonitor.stubs"/>
+            <arg value="${base}/descriptors/OrderEventMonitor.wsdl"/>
+        </java>
+        <!--wsdl already exists for customer collection so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.entities.stubs"/>
+            <arg value="${base}/descriptors/CustomerCollection.wsdl"/>
+        </java>
+        <!--wsdl already exists for customer collection so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.entities.stubs"/>
+            <arg value="${base}/descriptors/InventoryCollection.wsdl"/>
+        </java>
+        <!--wsdl already exists for customer collection so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.entities.stubs"/>
+            <arg value="${base}/descriptors/ProductCollection.wsdl"/>
+        </java>
+        <!--wsdl already exists for customer collection so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.entities.stubs"/>
+            <arg value="${base}/descriptors/Warehouse.wsdl"/>
+        </java>
+        <!--wsdl already exists for customer collection so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.entities.stubs"/>
+            <arg value="${base}/descriptors/Company.wsdl"/>
+        </java>
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.processes.stubs"/>
+            <arg value="${base}/descriptors/ProductOrderManager.wsdl"/>
+        </java>
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.processes.stubs"/>
+            <arg value="${base}/descriptors/ProductOrder.wsdl"/>
+        </java>
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.patterns.observer.stubs"/>
+            <arg value="${base}/descriptors/ProductOrderObserver.wsdl"/>
+        </java>
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.eventservice.stubs"/>
+            <arg value="${base}/descriptors/EventService.wsdl"/>
+        </java>
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.eventservice.stubs"/>
+            <arg value="${base}/descriptors/Subscriber.wsdl"/>
+        </java>
+        <java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+        <classpath>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+        </classpath>
+            <arg value="-v"/>
+            <arg value="-o${stubDir}"/>
+            <arg value="-pcom.servicefoundry.books.webservices.entities.stubs"/>
+            <arg value="${base}/descriptors/OrderCollection.wsdl"/>
+        </java>
+    </target>
+       
+    <target name="buildtables">
+        <java classname="com.libelis.lido.ds.jdbc.DefineSchema" dir="${metadata}" fork="yes" output="buildtables.out">
+        <classpath>
+            <fileset dir="${libDir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${base}/stubs"/>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${jdbc}/lib">
+                <include name="**/*.*"/>
+            </fileset>
+            <pathelement path="${jdbc}"/>
+            <pathelement path="${jdo}/bin"/>
+        </classpath>
+        <arg line="-dv ${jdbcDriver} -database ${database} -metadata metadata.jdo"/>
+        </java>
+    </target>
+    <target name="enhance">
+        <java classname="com.libelis.lido.Enhance" dir="${metadata}" fork="yes">
+            <arg value="-metadata metadata.jdo"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdbc}/lib">
+                <include name="**/*.*"/>
+            </fileset>
+            <pathelement path="${jdbc}"/>
+            <pathelement path="${jdo}/bin"/>
+            </classpath>
+        </java>
+    </target>
+   <target name="testcustomercollection">
+        <java classname="com.servicefoundry.books.webservices.entities.CustomerCollectionImpl" dir="${metadata}" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdbc}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <pathelement path="${jdbc}"/>
+            <pathelement path="${jdo}/bin"/>
+            </classpath>
+        </java>
+    </target>
+   <target name="DirectSOAPTestClient">
+        <java classname="com.servicefoundry.books.webservices.tests.DirectSOAPTestClient" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+   <target name="testcompany">
+        <java classname="com.servicefoundry.books.webservices.tests.TestCompany" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>    
+   <target name="testcustomercollectionwebservice">
+        <java classname="com.servicefoundry.books.webservices.tests.TestCustomerCollectionWebService" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+   <target name="testdatatransferobject">
+        <java classname="com.servicefoundry.books.webservices.tests.TestDataTransferObject" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+   <target name="testpartialpopulation">
+        <java classname="com.servicefoundry.books.webservices.tests.TestPartialPopulation" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+    
+   <target name="testeventmonitor">
+        <input message="Enter the order number to monitor (created in Ch8 or Ch9): "
+               addproperty="testeventmonitor.orderid"/>
+        <java classname="com.servicefoundry.books.webservices.patterns.eventmonitor.Client" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="${testeventmonitor.orderid}"/>
+            </java>
+    </target>
+       <target name="changeorderstatus">
+        <input message="Enter the order number to change the status of: "
+               addproperty="changeorderstatus.orderid"/>
+        <input message="Enter the status to change the order to: "
+               addproperty="changeorderstatus.status"/>
+        <java classname="com.servicefoundry.books.webservices.patterns.eventmonitor.ModifyOrderStatus" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="${changeorderstatus.orderid}"/>
+            <arg value="${changeorderstatus.status}"/>
+        </java>
+    </target>
+
+   <target name="registerwitheventservice">
+        <java classname="com.servicefoundry.books.webservices.tests.SubscriberTest" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+   <target name="publishtoeventservice">
+        <java classname="com.servicefoundry.books.webservices.tests.Publisher" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+   <target name="graphicaleventstream">
+        <java classname="com.servicefoundry.books.webservices.tests.ServiceToApplicationTest" fork="yes">
+            <jvmarg value="-Djava.security.manager"/>
+            <jvmarg value="-Djava.security.policy=${base}/bin/policy.all"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+        
+   <target name="populate">
+        <java classname="com.servicefoundry.books.webservices.util.Populate" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+    
+   <target name="publish">
+        <java classname="com.servicefoundry.books.webservices.util.Publish" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/bin">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/mail.jar"/>
+                <include name="**/activation.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="publish"/>
+        </java>
+    </target>
+    
+   <target name="testservicefactory">
+        <java classname="com.servicefoundry.books.webservices.servicefactory.ProductCollectionServiceFactory" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/bin">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/mail.jar"/>
+                <include name="**/activation.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="publish"/>
+        </java>
+    </target>
+
+   <target name="testproductorder">
+        <java classname="com.servicefoundry.books.webservices.tests.ProductOrderTest" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/bin">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/mail.jar"/>
+                <include name="**/activation.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="-s"/>
+        </java>
+    </target>
+   <target name="testasynchproductorder">
+        <java classname="com.servicefoundry.books.webservices.tests.ProductOrderTest" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/bin">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/mail.jar"/>
+                <include name="**/activation.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="-a"/>
+        </java>
+    </target>
+   <target name="testwebserviceobserver">
+        <java classname="com.servicefoundry.books.webservices.tests.ProductOrderTest" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/bin">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/mail.jar"/>
+                <include name="**/activation.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="-a"/>
+        </java>
+    </target>
+    <target name="testjavaobserver">
+        <java classname="com.servicefoundry.books.webservices.simpleexample.observable.ObserverDemo" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+
+       <target name="retrievewsdl">
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/Company?wsdl"/>
+            <arg value="${base}/descriptors/Company.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/InventoryCollection?wsdl"/>
+            <arg value="${base}/descriptors/InventoryCollection.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/ProductCollection?wsdl"/>
+            <arg value="${base}/descriptors/ProductCollection.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/Warehouse?wsdl"/>
+            <arg value="${base}/descriptors/Warehouse.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/SmallCompanyImpl?wsdl"/>
+            <arg value="${base}/descriptors/SmallCompanyImpl.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/CustomerCollection?wsdl"/>
+            <arg value="${base}/descriptors/CustomerCollection.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/ProductOrder?wsdl"/>
+            <arg value="${base}/descriptors/ProductOrder.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/ProductOrderManager?wsdl"/>
+            <arg value="${base}/descriptors/ProductOrderManager.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/ProductOrderObserver?wsdl"/>
+            <arg value="${base}/descriptors/ProductOrderObserver.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/EventService?wsdl"/>
+            <arg value="${base}/descriptors/EventService.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/Subscriber?wsdl"/>
+            <arg value="${base}/descriptors/Subscriber.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+        <java classname="com.servicefoundry.books.webservices.util.WSDLRetrieve" fork="yes" output="retrieve.out">
+            <arg value="${axisbaseserviceurl}/services/OrderCollection?wsdl"/>
+            <arg value="${base}/descriptors/OrderCollection.wsdl"/>
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            </classpath>
+        </java>
+    </target>
+
+       <target name="unpublish">
+        <java classname="com.servicefoundry.books.webservices.util.Publish" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${uddiBase}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${jdo}/bin">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/mail.jar"/>
+                <include name="**/activation.jar"/>
+            </fileset>
+            </classpath>
+            <arg value="delete"/>
+        </java>
+    </target>
+
+        <target name="finishinstall">
+        <copy todir="${axisDeployDir}/WEB-INF/lib" verbose="true">
+          <fileset dir="${jdo}/lib"/>
+          <fileset dir="${jdbc}" includes="*.jar"/>
+          <fileset dir="${uddiBase}/lib" includes="*.jar"/>
+          <fileset dir="${soap}/lib" includes="*.jar"/>
+        </copy>
+
+        <copy file="${jdo}\lib\connector_1_0_0.jar" todir="${tomcatDeployDir}/common/lib" verbose="true"/>
+        <copy file="${jdo}\lib\connector_1_0_0.jar" todir="${tomcatDeployDir}/common/lib" verbose="true"/>
+    </target>
+    <target description="build Java files from WSDL" name="wsdl2java">
+    
+        <!--wsdl already exists for event monitor so build java stubs -->
+        <java classname="org.apache.axis.wsdl.WSDL2Java" classpath="${build}/staging;${libDir}/axis.jar;${libDir}/xerces.jar;${libDir}/commons-logging.jar;${libDir}/log4j-core.jar;${libDir}/tt-bytecode.jar;${libDir}/jaxrpc.jar;${libDir}/wsdl4j.jar" fork="yes" output="wsdl2java.out">
+            <arg value="${base}/descriptors/ProductOrderInterface.wsdl"/>
+            <arg value="-o${base}/src"/>
+            <arg value="-pcom.servicefoundry.books.webservices.processes"/>
+            <arg value="-v"/>
+        </java>
+
+    </target>
+    <target name="registersubscriberwitheventservice2">
+        <java classname="com.servicefoundry.books.webservices.eventservice.Subscriber" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+        </target>
+    <target name="fauximplementation">
+        <java classname="com.servicefoundry.books.webservices.tests.FauxImplementationTest" fork="yes">
+            <classpath>
+            <pathelement path="${build}/staging"/>
+            <fileset dir="${build}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${tomcatDeployDir}/common/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+    <target name="tcpmon">
+        <java classname="org.apache.axis.utils.tcpmon" fork="yes">
+            <classpath>
+            <fileset dir="${soap}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            <fileset dir="${axis}/lib">
+                <include name="**/*.jar"/>
+            </fileset>
+            </classpath>
+        </java>
+    </target>
+    
+</project>

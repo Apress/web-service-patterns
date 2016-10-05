@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/OrderCollection" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/OrderCollection" xmlns:intf="http://localhost:8080/axis/services/OrderCollection" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="urn:OrderCollection" xmlns:tns2="http://entities.webservices.books.servicefoundry.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="urn:OrderCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="OrderImpl"><sequence><element name="customerId" nillable="true" type="xsd:string"/><element name="orderId" nillable="true" type="xsd:string"/><element name="orderLines" nillable="true" type="impl:ArrayOf_tns1_OrderLineImpl"/><element name="status" type="xsd:int"/></sequence></complexType><complexType name="OrderLineImpl"><sequence><element name="productSku" nillable="true" type="xsd:string"/><element name="quantity" type="xsd:int"/><element name="unitPrice" type="xsd:float"/></sequence></complexType><element name="OrderImpl" nillable="true" type="tns1:OrderImpl"/><complexType name="OrderKey"><sequence><element name="orderId" nillable="true" type="xsd:string"/></sequence></complexType><element name="OrderKey" nillable="true" type="tns1:OrderKey"/></schema><schema targetNamespace="http://localhost:8080/axis/services/OrderCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_tns1_OrderLineImpl"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:OrderLineImpl[]"/></restriction></complexContent></complexType><complexType name="ArrayOf_tns1_OrderImpl"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:OrderImpl[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns1_OrderImpl" nillable="true" type="impl:ArrayOf_tns1_OrderImpl"/></schema><schema targetNamespace="http://entities.webservices.books.servicefoundry.com" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="CustomerKey"><sequence><element name="customerId" nillable="true" type="xsd:string"/></sequence></complexType><element name="CustomerKey" nillable="true" type="tns2:CustomerKey"/></schema></wsdl:types>
+  <wsdl:message name="getOrdersResponse">
+    <wsdl:part name="getOrdersReturn" type="intf:ArrayOf_tns1_OrderImpl"/>
+  </wsdl:message>
+  <wsdl:message name="addOrderResponse">
+    <wsdl:part name="addOrderReturn" type="tns1:OrderKey"/>
+  </wsdl:message>
+  <wsdl:message name="getOrdersByCustomerRequest">
+    <wsdl:part name="customer" type="tns2:CustomerKey"/>
+  </wsdl:message>
+  <wsdl:message name="changeOrderStatusRequest">
+    <wsdl:part name="key" type="tns1:OrderKey"/>
+    <wsdl:part name="status" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="getOrderResponse">
+    <wsdl:part name="getOrderReturn" type="tns1:OrderImpl"/>
+  </wsdl:message>
+  <wsdl:message name="removeOrderResponse">
+  </wsdl:message>
+  <wsdl:message name="getOrdersRequest">
+  </wsdl:message>
+  <wsdl:message name="removeOrderRequest">
+    <wsdl:part name="key" type="tns1:OrderKey"/>
+  </wsdl:message>
+  <wsdl:message name="getOrderRequest">
+    <wsdl:part name="key" type="tns1:OrderKey"/>
+  </wsdl:message>
+  <wsdl:message name="getOrdersByCustomerResponse">
+    <wsdl:part name="getOrdersByCustomerReturn" type="intf:ArrayOf_tns1_OrderImpl"/>
+  </wsdl:message>
+  <wsdl:message name="changeOrderStatusResponse">
+  </wsdl:message>
+  <wsdl:message name="addOrderRequest">
+    <wsdl:part name="order" type="tns1:OrderImpl"/>
+  </wsdl:message>
+  <wsdl:portType name="OrderCollectionImpl">
+    <wsdl:operation name="addOrder" parameterOrder="order">
+      <wsdl:input message="intf:addOrderRequest" name="addOrderRequest"/>
+      <wsdl:output message="intf:addOrderResponse" name="addOrderResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrder" parameterOrder="key">
+      <wsdl:input message="intf:getOrderRequest" name="getOrderRequest"/>
+      <wsdl:output message="intf:getOrderResponse" name="getOrderResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeOrder" parameterOrder="key">
+      <wsdl:input message="intf:removeOrderRequest" name="removeOrderRequest"/>
+      <wsdl:output message="intf:removeOrderResponse" name="removeOrderResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="changeOrderStatus" parameterOrder="key status">
+      <wsdl:input message="intf:changeOrderStatusRequest" name="changeOrderStatusRequest"/>
+      <wsdl:output message="intf:changeOrderStatusResponse" name="changeOrderStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrders">
+      <wsdl:input message="intf:getOrdersRequest" name="getOrdersRequest"/>
+      <wsdl:output message="intf:getOrdersResponse" name="getOrdersResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrdersByCustomer" parameterOrder="customer">
+      <wsdl:input message="intf:getOrdersByCustomerRequest" name="getOrdersByCustomerRequest"/>
+      <wsdl:output message="intf:getOrdersByCustomerResponse" name="getOrdersByCustomerResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OrderCollectionSoapBinding" type="intf:OrderCollectionImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addOrder">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addOrderRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addOrderResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrder">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getOrderRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getOrderResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeOrder">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeOrderRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeOrderResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="changeOrderStatus">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="changeOrderStatusRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="changeOrderStatusResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrders">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getOrdersRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getOrdersResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrdersByCustomer">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getOrdersByCustomerRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getOrdersByCustomerResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/OrderCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrderCollectionImplService">
+    <wsdl:port binding="intf:OrderCollectionSoapBinding" name="OrderCollection">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/OrderCollection"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

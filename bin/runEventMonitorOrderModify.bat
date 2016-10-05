@@ -1,0 +1,1 @@
+%JAVA%\bin\java com.servicefoundry.books.webservices.patterns.eventmonitor.ModifyStatus %1 %2 %3

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/CustomerCollection" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/CustomerCollection" xmlns:intf="http://localhost:8080/axis/services/CustomerCollection" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="urn:CustomerCollection" xmlns:tns2="urn:CustomerCollection2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://localhost:8080/axis/services/CustomerCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_xsd_string"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/></restriction></complexContent></complexType><element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/><complexType name="ArrayOf_tns1_Customer"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:Customer[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns1_Customer" nillable="true" type="impl:ArrayOf_tns1_Customer"/><complexType name="ArrayOf_tns2_CustomerSummaryInformation"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:CustomerSummaryInformation[]"/></restriction></complexContent></complexType><element name="ArrayOf_tns2_CustomerSummaryInformation" nillable="true" type="impl:ArrayOf_tns2_CustomerSummaryInformation"/></schema><schema targetNamespace="urn:CustomerCollection" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="CustomerKey"><sequence><element name="customerId" nillable="true" type="xsd:string"/></sequence></complexType><element name="CustomerKey" nillable="true" type="tns1:CustomerKey"/><complexType name="Customer"><sequence><element name="address" nillable="true" type="tns1:Address"/><element name="customerId" nillable="true" type="xsd:string"/><element name="customerInformation" nillable="true" type="tns1:CustomerInformation"/><element name="firstName" nillable="true" type="xsd:string"/><element name="lastName" nillable="true" type="xsd:string"/></sequence></complexType><complexType name="Address"><sequence><element name="addressLine1" nillable="true" type="xsd:string"/><element name="addressLine2" nillable="true" type="xsd:string"/><element name="city" nillable="true" type="xsd:string"/><element name="state" nillable="true" type="xsd:string"/><element name="zipCode" nillable="true" type="xsd:string"/></sequence></complexType><complexType name="CustomerInformation"><sequence><element name="creditAccount" nillable="true" type="tns1:CreditAccount"/><element name="internetAddress" nillable="true" type="tns1:InternetAddress"/><element name="shippingAddress" nillable="true" type="tns1:Address"/></sequence></complexType><complexType name="CreditAccount"><sequence><element name="account" nillable="true" type="xsd:string"/><element name="accountType" nillable="true" type="xsd:string"/><element name="defaultAccount" type="xsd:boolean"/><element name="expirationDate" nillable="true" type="xsd:string"/></sequence></complexType><complexType name="InternetAddress"><sequence><element name="primaryEmailAddress" nillable="true" type="xsd:string"/><element name="primaryUrl" nillable="true" type="xsd:string"/><element name="secondaryEmailAddress" nillable="true" type="xsd:string"/></sequence></complexType><element name="Customer" nillable="true" type="tns1:Customer"/></schema><schema targetNamespace="urn:CustomerCollection2" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="CustomerSummaryInformation"><sequence><element name="firstName" nillable="true" type="xsd:string"/><element name="id" nillable="true" type="xsd:string"/><element name="lastName" nillable="true" type="xsd:string"/></sequence></complexType></schema></wsdl:types>
+  <wsdl:message name="mainResponse">
+  </wsdl:message>
+  <wsdl:message name="getCustomersLastRequest">
+    <wsdl:part name="lastName" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomerSummaryInformationsResponse">
+    <wsdl:part name="getCustomerSummaryInformationsReturn" type="intf:ArrayOf_tns2_CustomerSummaryInformation"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomerRequest">
+    <wsdl:part name="key" type="tns1:CustomerKey"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomersLastFirstResponse">
+    <wsdl:part name="getCustomersLastFirstReturn" type="intf:ArrayOf_tns1_Customer"/>
+  </wsdl:message>
+  <wsdl:message name="addCustomerRequest">
+    <wsdl:part name="customer" type="tns1:Customer"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomersRequest">
+  </wsdl:message>
+  <wsdl:message name="mainRequest">
+    <wsdl:part name="args" type="intf:ArrayOf_xsd_string"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomersLastResponse">
+    <wsdl:part name="getCustomersLastReturn" type="intf:ArrayOf_tns1_Customer"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomerSummaryInformationsRequest">
+  </wsdl:message>
+  <wsdl:message name="getCustomersLastFirstRequest">
+    <wsdl:part name="lastName" type="xsd:string"/>
+    <wsdl:part name="firstName" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomerResponse">
+    <wsdl:part name="getCustomerReturn" type="tns1:Customer"/>
+  </wsdl:message>
+  <wsdl:message name="setCustomerSummaryInformationsResponse">
+  </wsdl:message>
+  <wsdl:message name="removeCustomerRequest">
+    <wsdl:part name="key" type="tns1:CustomerKey"/>
+  </wsdl:message>
+  <wsdl:message name="setCustomerSummaryInformationsRequest">
+    <wsdl:part name="infos" type="intf:ArrayOf_tns2_CustomerSummaryInformation"/>
+  </wsdl:message>
+  <wsdl:message name="removeCustomerResponse">
+  </wsdl:message>
+  <wsdl:message name="addCustomerResponse">
+    <wsdl:part name="addCustomerReturn" type="tns1:CustomerKey"/>
+  </wsdl:message>
+  <wsdl:message name="getCustomersResponse">
+    <wsdl:part name="getCustomersReturn" type="intf:ArrayOf_tns1_Customer"/>
+  </wsdl:message>
+  <wsdl:portType name="CustomerCollectionImpl">
+    <wsdl:operation name="main" parameterOrder="args">
+      <wsdl:input message="intf:mainRequest" name="mainRequest"/>
+      <wsdl:output message="intf:mainResponse" name="mainResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeCustomer" parameterOrder="key">
+      <wsdl:input message="intf:removeCustomerRequest" name="removeCustomerRequest"/>
+      <wsdl:output message="intf:removeCustomerResponse" name="removeCustomerResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addCustomer" parameterOrder="customer">
+      <wsdl:input message="intf:addCustomerRequest" name="addCustomerRequest"/>
+      <wsdl:output message="intf:addCustomerResponse" name="addCustomerResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomer" parameterOrder="key">
+      <wsdl:input message="intf:getCustomerRequest" name="getCustomerRequest"/>
+      <wsdl:output message="intf:getCustomerResponse" name="getCustomerResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomersLastFirst" parameterOrder="lastName firstName">
+      <wsdl:input message="intf:getCustomersLastFirstRequest" name="getCustomersLastFirstRequest"/>
+      <wsdl:output message="intf:getCustomersLastFirstResponse" name="getCustomersLastFirstResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomersLast" parameterOrder="lastName">
+      <wsdl:input message="intf:getCustomersLastRequest" name="getCustomersLastRequest"/>
+      <wsdl:output message="intf:getCustomersLastResponse" name="getCustomersLastResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomers">
+      <wsdl:input message="intf:getCustomersRequest" name="getCustomersRequest"/>
+      <wsdl:output message="intf:getCustomersResponse" name="getCustomersResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerSummaryInformations">
+      <wsdl:input message="intf:getCustomerSummaryInformationsRequest" name="getCustomerSummaryInformationsRequest"/>
+      <wsdl:output message="intf:getCustomerSummaryInformationsResponse" name="getCustomerSummaryInformationsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setCustomerSummaryInformations" parameterOrder="infos">
+      <wsdl:input message="intf:setCustomerSummaryInformationsRequest" name="setCustomerSummaryInformationsRequest"/>
+      <wsdl:output message="intf:setCustomerSummaryInformationsResponse" name="setCustomerSummaryInformationsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerCollectionSoapBinding" type="intf:CustomerCollectionImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="main">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="mainRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="mainResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeCustomer">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="removeCustomerRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="removeCustomerResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addCustomer">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addCustomerRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addCustomerResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomer">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCustomerRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomerResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomersLastFirst">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCustomersLastFirstRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomersLastFirstResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomersLast">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCustomersLastRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomersLastResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomers">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCustomersRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomersResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerSummaryInformations">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getCustomerSummaryInformationsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomerSummaryInformationsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setCustomerSummaryInformations">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setCustomerSummaryInformationsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setCustomerSummaryInformationsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/CustomerCollection" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerCollectionImplService">
+    <wsdl:port binding="intf:CustomerCollectionSoapBinding" name="CustomerCollection">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/CustomerCollection"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

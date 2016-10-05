@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/SmallCompanyImpl" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/SmallCompanyImpl" xmlns:intf="http://localhost:8080/axis/services/SmallCompanyImpl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types/>
+  <wsdl:message name="setNameRequest">
+    <wsdl:part name="name" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getNameResponse">
+    <wsdl:part name="getNameReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="setNameResponse">
+  </wsdl:message>
+  <wsdl:message name="getNameRequest">
+  </wsdl:message>
+  <wsdl:portType name="SmallCompanyImpl">
+    <wsdl:operation name="getName">
+      <wsdl:input message="intf:getNameRequest" name="getNameRequest"/>
+      <wsdl:output message="intf:getNameResponse" name="getNameResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="setName" parameterOrder="name">
+      <wsdl:input message="intf:setNameRequest" name="setNameRequest"/>
+      <wsdl:output message="intf:setNameResponse" name="setNameResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SmallCompanyImplSoapBinding" type="intf:SmallCompanyImpl">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/SmallCompanyImpl" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/SmallCompanyImpl" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setName">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="setNameRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/SmallCompanyImpl" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="setNameResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/SmallCompanyImpl" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmallCompanyImplService">
+    <wsdl:port binding="intf:SmallCompanyImplSoapBinding" name="SmallCompanyImpl">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/SmallCompanyImpl"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

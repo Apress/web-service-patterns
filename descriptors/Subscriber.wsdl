@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/Subscriber" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/Subscriber" xmlns:intf="http://localhost:8080/axis/services/Subscriber" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types/>
+  <wsdl:message name="updateResponse">
+  </wsdl:message>
+  <wsdl:message name="updateRequest">
+    <wsdl:part name="eventId" type="xsd:string"/>
+    <wsdl:part name="data" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:portType name="Subscriber">
+    <wsdl:operation name="update" parameterOrder="eventId data">
+      <wsdl:input message="intf:updateRequest" name="updateRequest"/>
+      <wsdl:output message="intf:updateResponse" name="updateResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubscriberSoapBinding" type="intf:Subscriber">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="update">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="updateRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Subscriber" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="updateResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/Subscriber" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SubscriberService">
+    <wsdl:port binding="intf:SubscriberSoapBinding" name="Subscriber">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/Subscriber"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1 @@
+%JAVA%\bin\java com.servicefoundry.books.webservices.patterns.soa.DeleteBusinessEntity %1 %2 %3

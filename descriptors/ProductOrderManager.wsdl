@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost:8080/axis/services/ProductOrderManager" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://localhost:8080/axis/services/ProductOrderManager" xmlns:intf="http://localhost:8080/axis/services/ProductOrderManager" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><wsdl:types><schema targetNamespace="http://localhost:8080/axis/services/ProductOrderManager" xmlns="http://www.w3.org/2001/XMLSchema"><import namespace="http://schemas.xmlsoap.org/soap/encoding/"/><complexType name="ArrayOf_xsd_string"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/></restriction></complexContent></complexType><element name="ArrayOf_xsd_string" nillable="true" type="impl:ArrayOf_xsd_string"/><complexType name="ArrayOf_xsd_int"><complexContent><restriction base="soapenc:Array"><attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:int[]"/></restriction></complexContent></complexType><element name="ArrayOf_xsd_int" nillable="true" type="impl:ArrayOf_xsd_int"/></schema></wsdl:types>
+  <wsdl:message name="addObserverResponse">
+  </wsdl:message>
+  <wsdl:message name="addObserverRequest">
+    <wsdl:part name="orderId" type="xsd:string"/>
+    <wsdl:part name="subscriptionUrl" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="getStatusResponse">
+    <wsdl:part name="getStatusReturn" type="xsd:int"/>
+  </wsdl:message>
+  <wsdl:message name="deleteObserverRequest">
+    <wsdl:part name="orderId" type="xsd:string"/>
+    <wsdl:part name="subscriptionUrl" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="createProductOrderResponse">
+    <wsdl:part name="createProductOrderReturn" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="deleteObserverResponse">
+  </wsdl:message>
+  <wsdl:message name="getStatusRequest">
+    <wsdl:part name="orderId" type="xsd:string"/>
+  </wsdl:message>
+  <wsdl:message name="createProductOrderRequest">
+    <wsdl:part name="customer" type="xsd:string"/>
+    <wsdl:part name="productSkus" type="intf:ArrayOf_xsd_string"/>
+    <wsdl:part name="quantity" type="intf:ArrayOf_xsd_int"/>
+  </wsdl:message>
+  <wsdl:portType name="ProductOrderManager">
+    <wsdl:operation name="getStatus" parameterOrder="orderId">
+      <wsdl:input message="intf:getStatusRequest" name="getStatusRequest"/>
+      <wsdl:output message="intf:getStatusResponse" name="getStatusResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="createProductOrder" parameterOrder="customer productSkus quantity">
+      <wsdl:input message="intf:createProductOrderRequest" name="createProductOrderRequest"/>
+      <wsdl:output message="intf:createProductOrderResponse" name="createProductOrderResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addObserver" parameterOrder="orderId subscriptionUrl">
+      <wsdl:input message="intf:addObserverRequest" name="addObserverRequest"/>
+      <wsdl:output message="intf:addObserverResponse" name="addObserverResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="deleteObserver" parameterOrder="orderId subscriptionUrl">
+      <wsdl:input message="intf:deleteObserverRequest" name="deleteObserverRequest"/>
+      <wsdl:output message="intf:deleteObserverResponse" name="deleteObserverResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductOrderManagerSoapBinding" type="intf:ProductOrderManager">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getStatus">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getStatusRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getStatusResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createProductOrder">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="createProductOrderRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="createProductOrderResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addObserver">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="addObserverRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="addObserverResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteObserver">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="deleteObserverRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="deleteObserverResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://localhost:8080/axis/services/ProductOrderManager" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductOrderManagerService">
+    <wsdl:port binding="intf:ProductOrderManagerSoapBinding" name="ProductOrderManager">
+      <wsdlsoap:address location="http://localhost:8080/axis/services/ProductOrderManager"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

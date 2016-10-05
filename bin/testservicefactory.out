@@ -1,0 +1,4 @@
+ProductCollectionFactory::getServiceTModelKey TModel Value = UUID:F128D7A0-2CFE-11D7-9FBA-000629DC0A53
+ProductCollectionServiceFactory::getService # of product collections found=0java.lang.NullPointerException
+
+	at com.servicefoundry.books.webservices.servicefactory.ProductCollectionServiceFactory.main(ProductCollectionServiceFactory.java:223)
